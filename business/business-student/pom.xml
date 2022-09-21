@@ -11,10 +11,6 @@
 
     <artifactId>business-student</artifactId>
 
-    <dependencies>
-
-    </dependencies>
-
     <build>
         <plugins>
             <!--            一个打包插件 需要运行的子工程必须添加-->

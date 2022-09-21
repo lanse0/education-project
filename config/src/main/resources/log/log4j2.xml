@@ -18,7 +18,7 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
             %ex：异常信息
             %n是换行符-->
         <!--<property name="LOG_PATTERN" value="%date{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{X-B3-TraceId}, %X{X-B3-SpanId}, %X{X-B3-ParentSpanId}, %X{X-Span-Export}] - %msg%n" />-->
-        <property name="LOG_PATTERN" value="[%date{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level [%C.%M(%L)] - '%msg'%n" />
+        <property name="LOG_PATTERN" value="[%date{yyyy-MM-dd HH:mm:ss.SSS}] [%X{ip}] [%thread] %-5level [%C.%M(%L)] - '%msg'%n" />
         <!-- 定义日志存储的路径，不要配置相对路径 -->
         <property name="FILE_PATH" value="./logs/${ctx:filename}" />
         <!--不同服务配置不同日志名 使用MDC获取服务名 ctx是固定前缀-->
@@ -94,7 +94,7 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <!-- 如果使用<asyncRoot> 或 <asyncLogger>，includeLocation="true"是必须要设置才会有类路径等一些信息打印出来   -->
     <loggers>
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileDebug"/>
             <appender-ref ref="RollingFileInfo"/>

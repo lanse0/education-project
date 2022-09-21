@@ -1,5 +1,6 @@
 package com.qf.commons.web.config;
 
+import com.qf.commons.web.aspect.LogMDCAspect;
 import com.qf.commons.web.exception.GlobalExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,5 +18,14 @@ public class WebAutoConfiguration {
     @Bean
     public GlobalExceptionHandler getGlobalExceptionHandler(){
         return new GlobalExceptionHandler();
+    }
+
+    /**
+     * Log日志的AOP处理
+     * @return
+     */
+    @Bean
+    public LogMDCAspect getLogMDCAspect(){
+        return new LogMDCAspect();
     }
 }

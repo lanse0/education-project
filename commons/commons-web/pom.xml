@@ -16,6 +16,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
 <!--        data里的R对象 只有具有控制器的模块需要使用 就是引用了web依赖的模块 所以R对象也放到这里和web一起被依赖-->
         <dependency>
             <groupId>com.qf</groupId>
