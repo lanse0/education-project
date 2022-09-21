@@ -1,0 +1,15 @@
+
+business/business-course/target/
+business/business-student/target/
+commons/commons-core/target/
+commons/commons-data/target/
+commons/commons-web/target/
+config/src/
+
+.idea
+target
+*.iml
+out
+/logs/
+
+.gitignore
