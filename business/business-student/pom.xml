@@ -15,4 +15,14 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <!--            一个打包插件 需要运行的子工程必须添加-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
