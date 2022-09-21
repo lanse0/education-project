@@ -21,6 +21,7 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
         <property name="LOG_PATTERN" value="[%date{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level [%C.%M(%L)] - '%msg'%n" />
         <!-- 定义日志存储的路径，不要配置相对路径 -->
         <property name="FILE_PATH" value="./logs" />
+        <!--不同服务配置不同日志名-->
         <property name="FILE_NAME" value="stulog" />
     </Properties>
     <!-- 定义输出器 -->
@@ -93,21 +94,21 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <!-- 如果使用<asyncRoot> 或 <asyncLogger>，includeLocation="true"是必须要设置才会有类路径等一些信息打印出来   -->
     <loggers>
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileDebug"/>
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
         </root>
-        <!-- 过滤 让自己的debug日志可以输出到控制台 additivity=false 关闭日志输出的继承
+        <!-- 过滤 让自己的debug日志可以输出到控制台 additivity=false 关闭日志输出的继承 -->
         <logger name="com.qf" level="debug" additivity="false">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileDebug"/>
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
-        </logger> -->
+        </logger>
         <!-- 异步输出器
         <asynclogger name="com.qf" level="debug" additivity="false" includeLocation="true">
           <appender-ref ref="RollingFileDebug"/>

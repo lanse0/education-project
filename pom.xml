@@ -25,6 +25,7 @@
         <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <qf.version>1.0-SNAPSHOT</qf.version>
+        <log4j.version>2.17.2</log4j.version>
     </properties>
 
     <dependencyManagement>
@@ -37,6 +38,18 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--日志框架的版本控制-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.qf</groupId>
@@ -51,6 +64,11 @@
             <dependency>
                 <groupId>com.qf</groupId>
                 <artifactId>commons-data</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>config</artifactId>
                 <version>${qf.version}</version>
             </dependency>
         </dependencies>
