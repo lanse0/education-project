@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: course
+    name: course-server
   profiles:
     include:
       - log
