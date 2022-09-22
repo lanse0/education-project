@@ -80,7 +80,37 @@
         </dependencies>
     </dependencyManagement>
 
+    <!--maven占位符-->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <!--运行环境-->
+                <runtime-profile>dev</runtime-profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <!--运行环境-->
+                <runtime-profile>test</runtime-profile>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <!--占位符生效的配置-->
+        <resources>
+            <resource>
+                <!--指定的资源文件中，占位符生效-->
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+
         <pluginManagement>
             <plugins>
                 <!--springBoot和maven的整合插件 - 必须是SpringBoot启动的工程去继承-->

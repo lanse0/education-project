@@ -12,8 +12,9 @@
     <artifactId>business-student</artifactId>
 
     <build>
+
         <plugins>
-            <!--            一个打包插件 需要运行的子工程必须添加-->
+            <!--一个打包插件 需要运行的子工程必须添加-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
