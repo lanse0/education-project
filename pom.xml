@@ -26,6 +26,7 @@
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <qf.version>1.0-SNAPSHOT</qf.version>
         <log4j.version>2.17.2</log4j.version>
+        <disruptor.version>3.4.2</disruptor.version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +49,11 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
             </dependency>
 
 

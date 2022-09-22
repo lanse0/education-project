@@ -94,21 +94,23 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <!-- 如果使用<asyncRoot> 或 <asyncLogger>，includeLocation="true"是必须要设置才会有类路径等一些信息打印出来   -->
     <loggers>
-        <root level="info">
+<!--        <root level="info">-->
+<!--         异步输出日志 includeLocation获取本地数据True-->
+        <asyncroot level="info" includeLocation="true">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileDebug"/>
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
-        </root>
+        </asyncroot>
         <!-- 过滤 让自己的debug日志可以输出到控制台 additivity=false 关闭日志输出的继承 -->
-        <logger name="com.qf" level="debug" additivity="false">
+        <asynclogger name="com.qf" level="debug" additivity="false" includeLocation="true">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileDebug"/>
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
-        </logger>
+        </asynclogger>
         <!-- 异步输出器
         <asynclogger name="com.qf" level="debug" additivity="false" includeLocation="true">
           <appender-ref ref="RollingFileDebug"/>

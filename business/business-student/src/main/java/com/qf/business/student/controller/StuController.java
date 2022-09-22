@@ -42,7 +42,7 @@ public class StuController {
 //        if (a < 0) {
 //            throw new ServiceException(403, "参数范围不合法");
 //        }
-        System.out.println(1/0);
+//        System.out.println(1/0);
 
         //发布一个自定义事件 事件发布机制
         applicationContext.publishEvent(new MyEvent(applicationContext));
