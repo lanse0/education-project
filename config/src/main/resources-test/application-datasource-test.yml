@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: 测试环境的数据库连接地址

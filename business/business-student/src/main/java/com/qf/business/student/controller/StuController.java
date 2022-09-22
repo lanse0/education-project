@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,9 @@ public class StuController {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Value("${spring.datasource.url}")
+    private String url;
+
     @RequestMapping("/list")
     public R list(Integer a) {
 
@@ -47,7 +51,7 @@ public class StuController {
         //发布一个自定义事件 事件发布机制
         applicationContext.publishEvent(new MyEvent(applicationContext));
 
-        return R.create("学生列表");
+        return R.create(url);
     }
 
     @RequestMapping("/reg")

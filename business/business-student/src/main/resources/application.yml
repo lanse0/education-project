@@ -2,6 +2,7 @@ spring:
   application:
     name: stu-server
   profiles:
-    include:
+    active: dev
       #表示导入一个后缀为log的yml文件 application-log.yml
-      - log
+      #- log
+      #- datasource
