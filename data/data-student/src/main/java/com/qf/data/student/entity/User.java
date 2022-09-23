@@ -2,12 +2,14 @@ package com.qf.data.student.entity;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.qf.commons.data.base.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * (User)表实体类
@@ -33,6 +35,10 @@ public class User extends BaseEntity {
     private String header;
     //角色 0管理员 1教师 2学生
     private Integer role;
-
+    //课程
+    /**
+     * 表示当前字段在数据库中不存在 @TableField(exist = false)
+     */
+    private List<Course> courses;
 }
 

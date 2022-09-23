@@ -53,6 +53,11 @@ public class StuController {
         return R.create(users);
     }
 
+    @RequestMapping("/listByCourse")
+    public R query(){
+        return R.create(userService.queryUserAndCourse());
+    }
+
     /**
      * 保存用户信息
      * @param user
