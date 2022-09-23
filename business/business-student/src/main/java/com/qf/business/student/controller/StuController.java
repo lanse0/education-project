@@ -70,6 +70,18 @@ public class StuController {
         return R.create("success");
     }
 
+    /**
+     * 修改用户信息
+     * @return
+     */
+    @RequestMapping("/update")
+    public R update(){
+        User user = new User();
+        user.setId(2);
+        user.setRole(3);
+        return R.create(userService.updateById(user));
+    }
+
     @RequestMapping("/reg")
     public R register(String username,String password){
         log.debug("用户注册 {} - {}",username,password);

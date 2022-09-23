@@ -21,6 +21,11 @@
             <groupId>io.github.verygoodwlk</groupId>
             <artifactId>ken-page-mybatis-commons</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
