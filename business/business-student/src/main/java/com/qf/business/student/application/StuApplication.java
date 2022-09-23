@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * create_time 2022/9/20
  */
 @SpringBootApplication
-@MapperScan("com.qf.business.student.dao")
 public class StuApplication {
     public static void main(String[] args) {
         SpringApplication.run(StuApplication.class, args);

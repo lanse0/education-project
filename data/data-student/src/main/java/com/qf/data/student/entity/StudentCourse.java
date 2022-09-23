@@ -1,6 +1,9 @@
 package com.qf.data.student.entity;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.qf.commons.data.base.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,19 +16,12 @@ import java.util.Date;
  * @since 2022-09-23 15:15:12
  */
 @Data
-public class StudentCourse implements Serializable {
+public class StudentCourse extends BaseEntity {
     //学生id
+    @TableId(type = IdType.AUTO)
     private Integer sid;
     //课程id
     private Integer cid;
-    //创建时间
-    private Date createTime;
-    //更新时间
-    private Date updateTime;
-    //状态
-    private Integer status;
-    //删除表示 0可用 1删除
-    private Integer delFlag;
 
 }
 

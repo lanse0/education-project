@@ -1,10 +1,11 @@
 package com.qf.data.student.entity;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.qf.commons.data.base.BaseEntity;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 课程表(Course)表实体类
@@ -13,8 +14,9 @@ import java.util.Date;
  * @since 2022-09-23 15:14:00
  */
 @Data
-public class Course implements Serializable {
+public class Course extends BaseEntity {
     //主键
+    @TableId(type = IdType.AUTO)
     private Integer id;
     //课程名称
     private String courseName;
@@ -23,14 +25,7 @@ public class Course implements Serializable {
     //课程最大人数
     private Integer courseNumber;
     //最大申请人数
-    private Integer appluNumber;
-    //创建时间
-    private Date createTime;
-    //更新时间
-    private Date updateTime;
-    //状态
-    private Integer status;
-    //删除表示 0可用 1删除
-    private Integer delFlag;
+    private Integer applyNumber;
+
 }
 

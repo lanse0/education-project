@@ -53,6 +53,18 @@ public class StuController {
         return R.create(users);
     }
 
+    /**
+     * 保存用户信息
+     * @param user
+     * @return
+     */
+    @RequestMapping("/insert")
+    public R insert(User user){
+        log.debug("新增用户信息- {}", user);
+        userService.save(user);
+        return R.create("success");
+    }
+
     @RequestMapping("/reg")
     public R register(String username,String password){
         log.debug("用户注册 {} - {}",username,password);

@@ -7,7 +7,7 @@
         <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
         <result property="tid" column="tid" jdbcType="INTEGER"/>
         <result property="courseNumber" column="course_number" jdbcType="INTEGER"/>
-        <result property="appluNumber" column="applu_number" jdbcType="INTEGER"/>
+        <result property="applyNumber" column="apply_number" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
@@ -16,10 +16,10 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into course.course(course_name, tid, course_number, applu_number, create_time, update_time, status, del_flag)
+        insert into course.course(course_name, tid, course_number, apply_number, create_time, update_time, status, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.courseName}, #{entity.tid}, #{entity.courseNumber}, #{entity.appluNumber}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        (#{entity.courseName}, #{entity.tid}, #{entity.courseNumber}, #{entity.applyNumber}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
@@ -30,7 +30,7 @@
             (#{entity.courseName}, #{entity.tid}, #{entity.courseNumber}, #{entity.appluNumber}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
         on duplicate key update
-         course_name = values(course_name) , tid = values(tid) , course_number = values(course_number) , applu_number = values(applu_number) , create_time = values(create_time) , update_time = values(update_time) , status = values(status) , del_flag = values(del_flag)     </insert>
+         course_name = values(course_name) , tid = values(tid) , course_number = values(course_number) , apply_number = values(apply_number) , create_time = values(create_time) , update_time = values(update_time) , status = values(status) , del_flag = values(del_flag)     </insert>
 
 </mapper>
 

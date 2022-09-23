@@ -16,6 +16,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.qf</groupId>
+            <artifactId>commons-data</artifactId>
+        </dependency>
     </dependencies>
 
     <packaging>pom</packaging>
