@@ -2,15 +2,19 @@ package com.qf.data.student.entity;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.qf.commons.data.base.BaseEntity;
+import com.qf.data.student.valid.MyValid;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +25,7 @@ import java.util.List;
  */
 @Data
 @ToString(callSuper = true) //打印父类的属性
+@MyValid(message = "年龄和生日不匹配") //自定义校验
 public class User extends BaseEntity {
     //主键
     //这个注解表示id自动增长 若未使用这个注解 mybatis-plus会用雪花算法来确定id（分库分表）
@@ -44,10 +49,17 @@ public class User extends BaseEntity {
     private String header;
     //角色 0管理员 1教师 2学生
     private Integer role;
+
     //课程
-    /**
-     * 表示当前字段在数据库中不存在 @TableField(exist = false)
-     */
+    //@TableField(exist = false) 表示当前字段在数据库中不存在
     private List<Course> courses;
+
+    /**
+     * 使用自定义校验
+     */
+    //@MyValid(message = "年龄不是偶数")
+    private Integer age;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
 }
 
