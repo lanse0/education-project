@@ -31,6 +31,10 @@
             <groupId>com.qf</groupId>
             <artifactId>commons-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.qf</groupId>
+            <artifactId>commons-mybatis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

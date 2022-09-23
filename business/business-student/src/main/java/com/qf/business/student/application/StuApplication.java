@@ -1,5 +1,7 @@
 package com.qf.business.student.application;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * create_time 2022/9/20
  */
 @SpringBootApplication
+@MapperScan("com.qf.business.student.dao")
 public class StuApplication {
     public static void main(String[] args) {
         SpringApplication.run(StuApplication.class, args);

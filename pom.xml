@@ -27,6 +27,8 @@
         <qf.version>1.0-SNAPSHOT</qf.version>
         <log4j.version>2.17.2</log4j.version>
         <disruptor.version>3.4.2</disruptor.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <ken-page.version>1.2.9</ken-page.version>
     </properties>
 
     <dependencyManagement>
@@ -56,6 +58,16 @@
                 <version>${disruptor.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.verygoodwlk</groupId>
+                <artifactId>ken-page-boot-starter</artifactId>
+                <version>${ken-page.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.qf</groupId>
@@ -76,6 +88,21 @@
                 <groupId>com.qf</groupId>
                 <artifactId>config</artifactId>
                 <version>${qf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>commons-mybatis</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>data-student</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.verygoodwlk</groupId>
+                <artifactId>ken-page-mybatis-commons</artifactId>
+                <version>${ken-page.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

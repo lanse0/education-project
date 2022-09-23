@@ -16,6 +16,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <!--不会打包这个依赖 用于帮助编写 可以有提示-->
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.verygoodwlk</groupId>
+            <artifactId>ken-page-boot-starter</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

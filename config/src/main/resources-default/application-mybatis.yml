@@ -1,0 +1,9 @@
+#开启分页插件
+kenplugin:
+  page:
+    webconfig:
+      enable: true
+    #定义参数名字
+#    key:
+#      num: a
+#      size: b

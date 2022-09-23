@@ -16,6 +16,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.verygoodwlk</groupId>
+            <artifactId>ken-page-mybatis-commons</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -1,16 +1,18 @@
 package com.qf.commons.data.result;
 
+import com.ken.mybatis.protocol.BaseResult;
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * 统一返回的R对象 - 接口层
+ * 继承BaseResult获得page对象
  * author 14526
  * create_time 2022/9/21
  */
 @Data
-public class R<T> implements Serializable {
+public class R<T> extends BaseResult implements Serializable {
 
     private Integer code;
     private String msg;
