@@ -1,18 +1,12 @@
 package com.qf.business.student.controller;
 
-import com.qf.business.student.application.MyEvent;
 import com.qf.business.student.service.UserService;
-import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.result.R;
 import com.qf.data.student.entity.User;
+import com.qf.data.student.vo.input.UserRegisterInput;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.juli.logging.LogFactory;
-import org.apache.tomcat.util.security.PrivilegedGetTccl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,12 +58,14 @@ public class StuController {
 
     /**
      * 保存用户信息
-     * @param user
      * @return
      */
     @RequestMapping("/insert")
-    public R insert(@Valid User user){ //@Valid 参数验证注解配合实体类中的规则使用
-        log.debug("新增用户信息- {}", user);
+    public R insert(@Valid UserRegisterInput registerInput){ //@Valid 参数验证注解配合实体类中的规则使用
+        log.debug("新增用户信息- {}", registerInput);
+        //转换
+        User user = new User();
+        BeanUtils.copyProperties(registerInput,user);
         userService.save(user);
         return R.create("success");
     }

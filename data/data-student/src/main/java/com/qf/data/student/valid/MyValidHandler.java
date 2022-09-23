@@ -1,6 +1,7 @@
 package com.qf.data.student.valid;
 
 import com.qf.data.student.entity.User;
+import com.qf.data.student.vo.input.UserRegisterInput;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -13,7 +14,7 @@ import java.util.Date;
  * author 14526
  * create_time 2022/9/24
  */
-public class MyValidHandler implements ConstraintValidator<MyValid, User> {
+public class MyValidHandler implements ConstraintValidator<MyValid, UserRegisterInput> {
 
     /**
      * 校验用户年龄和生日是否匹配 - 自定义校验
@@ -22,7 +23,7 @@ public class MyValidHandler implements ConstraintValidator<MyValid, User> {
      * @return
      */
     @Override
-    public boolean isValid(User user, ConstraintValidatorContext context) {
+    public boolean isValid(UserRegisterInput user, ConstraintValidatorContext context) {
 
         if (user.getAge() == null || user.getBirthday()==null){
             return true;
