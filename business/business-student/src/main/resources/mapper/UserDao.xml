@@ -44,13 +44,21 @@
         values(header) , role = values(role) , create_time = values(create_time) , update_time = values(update_time) ,
         status = values(status) , del_flag = values(del_flag)
     </insert>
+    <!--     SELECT
+                 u.*,c.*,c.id cid
+             FROM
+                 user u
+             JOIN student_course sc ON u.id = sc.sid
+             JOIN course c ON sc.cid = c.id where u.role = 2
+
+             解决分页插件关联嵌套查询结果不正确问题 -->
     <select id="queryUserAndCourse" resultMap="userAndCourseResultMap">
         SELECT
             u.*,c.*,c.id cid
         FROM
-        user u
+            (select * from user where role = 2 limit ?) u
         JOIN student_course sc ON u.id = sc.sid
-        JOIN course c ON sc.cid = c.id where u.role = 1
+        JOIN course c ON sc.cid = c.id
     </select>
 
 </mapper>
