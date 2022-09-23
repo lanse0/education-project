@@ -16,6 +16,7 @@
             <groupId>com.qf</groupId>
             <artifactId>data-student</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

@@ -4,8 +4,14 @@ import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.result.R;
 import com.qf.commons.data.result.RCodes;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 全局异常处理
@@ -21,6 +27,18 @@ public class GlobalExceptionHandler {
     public R serviceExceptionHandler(ServiceException e){
         return R.createFail(e.getCode(),e.getMsg());
     }
+
+    @ExceptionHandler(BindException.class)
+    public R bindExceptionHandler(BindException e){
+        BindingResult result = e.getBindingResult();
+        List<ObjectError> errors = result.getAllErrors();
+        List<String> errorInfo = new ArrayList<>();
+        for (ObjectError error : errors) {
+             errorInfo.add(error.getDefaultMessage());
+        }
+        return R.createFail(RCodes.DATA_CHECKED_ERROR,errorInfo);
+    }
+
 
     @ExceptionHandler()
     public R globExceptionHandler(Throwable t) {

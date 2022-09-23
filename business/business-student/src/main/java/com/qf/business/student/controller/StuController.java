@@ -14,9 +14,12 @@ import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -26,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/stu")
 @Slf4j
+@Validated //在方法上使用的参数校验 不推荐使用
 public class StuController {
 
     //使用lombox 的@Slf4j 简化日志 直接使用log.info 无需getLogger
@@ -64,7 +68,7 @@ public class StuController {
      * @return
      */
     @RequestMapping("/insert")
-    public R insert(User user){
+    public R insert(@Valid User user){ //@Valid 参数验证注解配合实体类中的规则使用
         log.debug("新增用户信息- {}", user);
         userService.save(user);
         return R.create("success");
@@ -83,7 +87,7 @@ public class StuController {
     }
 
     @RequestMapping("/reg")
-    public R register(String username,String password){
+    public R register(@NotBlank(message = "用户名不能为空") String username, @NotBlank(message = "密码不能为空") String password){
         log.debug("用户注册 {} - {}",username,password);
         return R.create("注册成功");
     }
