@@ -29,6 +29,8 @@
         <disruptor.version>3.4.2</disruptor.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <ken-page.version>1.2.9</ken-page.version>
+        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +43,23 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!--springCloud & springCloud alibaba-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!--日志框架的版本控制-->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -105,6 +124,11 @@
                 <version>${qf.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>business-student-feign</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.github.verygoodwlk</groupId>
                 <artifactId>ken-page-mybatis-commons</artifactId>
                 <version>${ken-page.version}</version>
@@ -119,6 +143,7 @@
             <properties>
                 <!--运行环境-->
                 <runtime-profile>dev</runtime-profile>
+                <nacos-server>192.168.121.129:8848</nacos-server>
             </properties>
         </profile>
         <profile>
@@ -126,6 +151,7 @@
             <properties>
                 <!--运行环境-->
                 <runtime-profile>test</runtime-profile>
+                <nacos-server>192.168.121.129:8848</nacos-server>
             </properties>
         </profile>
     </profiles>

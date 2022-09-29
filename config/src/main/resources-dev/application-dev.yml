@@ -4,3 +4,4 @@ spring:
       - log
       - datasource
       - mybatis
+      - feign

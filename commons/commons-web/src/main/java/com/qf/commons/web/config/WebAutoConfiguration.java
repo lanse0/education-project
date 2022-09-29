@@ -3,6 +3,7 @@ package com.qf.commons.web.config;
 import com.qf.commons.web.aspect.LogMDCAspect;
 import com.qf.commons.web.exception.GlobalExceptionHandler;
 import com.qf.commons.web.exception.ResponseHandler;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * create_time 2022/9/21
  */
 @Configuration
+@EnableFeignClients(basePackages = "com.qf.**.feign") //开启feign客户端 所有类都会依赖这个自动装配类 这里配置等于需要的地方都配置了
 public class WebAutoConfiguration {
     /**
      * 注册全局异常处理器

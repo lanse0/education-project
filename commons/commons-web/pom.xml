@@ -22,7 +22,22 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-<!--        data里的R对象 只有具有控制器的模块需要使用 就是引用了web依赖的模块 所以R对象也放到这里和web一起被依赖-->
+        <!--nacos注册中心和配置中心-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+
+        <!--        data里的R对象 只有具有控制器的模块需要使用 就是引用了web依赖的模块 所以R对象也放到这里和web一起被依赖-->
         <dependency>
             <groupId>com.qf</groupId>
             <artifactId>commons-data</artifactId>

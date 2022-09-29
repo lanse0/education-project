@@ -1,7 +1,5 @@
 package com.qf.data.student.vo.input;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.qf.data.student.valid.MyValid;
 import lombok.Data;
 import lombok.ToString;

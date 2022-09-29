@@ -10,24 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>business-student</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.qf</groupId>
-            <artifactId>data-student</artifactId>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-
-        <plugins>
-            <!--一个打包插件 需要运行的子工程必须添加-->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <packaging>pom</packaging>
+    <modules>
+        <module>business-student-core</module>
+        <module>business-student-feign</module>
+    </modules>
 
 </project>

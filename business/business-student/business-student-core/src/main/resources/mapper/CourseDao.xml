@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.business.student.core.dao.CourseDao">
+
+    <resultMap type="com.qf.data.student.entity.Course" id="CourseMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+        <result property="courseNumber" column="course_number" jdbcType="INTEGER"/>
+        <result property="applyNumber" column="apply_number" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into course.course(course_name, tid, course_number, apply_number, create_time, update_time, status, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.courseName}, #{entity.tid}, #{entity.courseNumber}, #{entity.applyNumber}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into course.course(course_name, tid, course_number, applu_number, create_time, update_time, status, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.courseName}, #{entity.tid}, #{entity.courseNumber}, #{entity.appluNumber}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+        on duplicate key update
+         course_name = values(course_name) , tid = values(tid) , course_number = values(course_number) , apply_number = values(apply_number) , create_time = values(create_time) , update_time = values(update_time) , status = values(status) , del_flag = values(del_flag)     </insert>
+
+</mapper>
+

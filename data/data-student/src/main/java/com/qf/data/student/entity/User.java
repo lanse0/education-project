@@ -44,7 +44,7 @@ public class User extends BaseEntity {
     private Integer role;
 
     //课程
-    //@TableField(exist = false) 表示当前字段在数据库中不存在
+    @TableField(exist = false) //表示当前字段在数据库中不存在
     private List<Course> courses;
 }
 

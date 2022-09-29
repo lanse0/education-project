@@ -1,0 +1,17 @@
+#设置ribbon的超时时间和重试机制
+ribbon:
+  #  ConnectTimeout: 1000  #毫秒   连接超时时间  三次握手失败
+  #  ReadTimeout: 1000     #毫秒   读超时时间   三次握手成功 没有数据返回
+  MaxAutoRetries: 0     #对当前实例的最大重试次数
+  MaxAutoRetriesNextServer: 0   #切换实例的最大重试次数(如果还失败就切换下
+
+#设置feign的超时时间 会覆盖ribbon的设置
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 1000
+        read-timeout: 1000
+      stu-server:
+        connect-timeout: 1000
+        read-timeout: 3000
