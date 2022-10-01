@@ -35,6 +35,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!--        链路追踪-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
 
 
         <!--        data里的R对象 只有具有控制器的模块需要使用 就是引用了web依赖的模块 所以R对象也放到这里和web一起被依赖-->

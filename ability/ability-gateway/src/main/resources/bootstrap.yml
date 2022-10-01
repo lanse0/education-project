@@ -1,11 +1,16 @@
 server:
-  port: 8081
+  port: 80
 spring:
   application:
-    name: course-server
+    name: gateway
   cloud:
     nacos:
       #注册中心 & 配置中心的统一地址配置
       server-addr: @nacos-server@
+      config:
+        #配置动态路由规则
+        shared-configs:
+          - data-id: gateway-config.yaml
+            refresh: true
   profiles:
     active: @runtime-profile@

@@ -1,0 +1,8 @@
+spring:
+  zipkin:
+    #配置zipkin服务的地址
+    base-url: http://192.168.121.129:9411
+  sleuth:
+    sampler:
+      #链路采样率，默认0.1 哪些请求要采样 1 -> 100%
+      probability: 1

@@ -38,7 +38,7 @@ public class StuController {
     @RequestMapping("/getById")
     public R getById(Integer id) throws InterruptedException {
         System.out.println("请求了stuController");
-        Thread.sleep(2100);
+//        Thread.sleep(2100);
         User user = userService.getById(id);
         return R.create(user);
     }
@@ -73,7 +73,7 @@ public class StuController {
         log.debug("新增用户信息- {}", registerInput);
         //转换
         User user = new User();
-        BeanUtils.copyProperties(registerInput,user);
+        BeanUtils.copyProperties(registerInput,user); //把输入实体复制到user中
         userService.save(user);
         return R.create("success");
     }
