@@ -53,6 +53,7 @@ public class StuController {
 
         //发布一个自定义事件 事件发布机制
 //        applicationContext.publishEvent(new MyEvent(applicationContext));
+        log.debug("查询学生信息");
 
         List<User> users = userService.list();
 

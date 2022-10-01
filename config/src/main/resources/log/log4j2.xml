@@ -18,7 +18,7 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
             %ex：异常信息
             %n是换行符-->
         <!--<property name="LOG_PATTERN" value="%date{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{X-B3-TraceId}, %X{X-B3-SpanId}, %X{X-B3-ParentSpanId}, %X{X-Span-Export}] - %msg%n" />-->
-        <property name="LOG_PATTERN" value="[%date{yyyy-MM-dd HH:mm:ss.SSS}] [%X{ip}] [%thread] %-5level [%C.%M(%L)] - '%msg'%n" />
+        <property name="LOG_PATTERN" value="[%date{yyyy-MM-dd HH:mm:ss.SSS}] [%X{ip}] [%thread] %-5level [%X{X-B3-TraceId}, %X{X-B3-SpanId}, %X{X-B3-ParentSpanId}, %X{X-Span-Export}] [%C.%M(%L)] - '%msg'%n" />
         <!-- 定义日志存储的路径，不要配置相对路径 -->
         <property name="FILE_PATH" value="./logs/${ctx:filename}" />
         <!--不同服务配置不同日志名 使用MDC获取服务名 ctx是固定前缀-->

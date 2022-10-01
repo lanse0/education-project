@@ -28,9 +28,10 @@ public class CourseController {
      */
     @RequestMapping("/query")
     public String query(){
-        System.out.println("请求课程的Controller");
+//        System.out.println("请求课程的Controller");
+        log.debug("请求课程的Controller");
         List<User> users = (List<User>) stuFeign.list(1).getData();
-        log.info("获取到学生数据---》"+users);
+        System.out.println("获取到学生数据---》"+users);
         return "课程信息，"+users;
     }
 
