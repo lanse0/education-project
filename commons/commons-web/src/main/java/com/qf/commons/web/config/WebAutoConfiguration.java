@@ -4,6 +4,7 @@ import com.qf.commons.web.aspect.LogMDCAspect;
 import com.qf.commons.web.exception.GlobalExceptionHandler;
 import com.qf.commons.web.exception.ResponseHandler;
 import com.qf.commons.web.sentinel.SentinelConfigInit;
+import com.qf.commons.web.sentinel.SentinelExceptionHandler;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,8 +43,21 @@ public class WebAutoConfiguration {
         return new LogMDCAspect();
     }
 
+    /**
+     * Sentinel读取nacos实例化配置
+     * @return
+     */
     @Bean
     public SentinelConfigInit getSentinelConfigInit(){
         return new SentinelConfigInit();
+    }
+
+    /**
+     * sentinel流控的信息处理
+     * @return
+     */
+    @Bean
+    public SentinelExceptionHandler getSentinelExceptionHandler(){
+        return new SentinelExceptionHandler();
     }
 }

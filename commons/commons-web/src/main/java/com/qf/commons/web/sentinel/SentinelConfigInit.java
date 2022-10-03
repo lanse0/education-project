@@ -12,6 +12,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.api.PropertyKeyConst;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Import;
 
 import java.util.List;
 import java.util.Properties;
@@ -21,6 +22,7 @@ import java.util.Properties;
  * author 14526
  * create_time 2022/10/4
  */
+//@Import(SentinelExceptionHandler.class) //SentinelConfigInit类被加载时 Sentinel的异常处理类同时也加载 导入
 public class SentinelConfigInit implements CommandLineRunner {
 
     @Value("${spring.application.name}")

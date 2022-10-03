@@ -24,19 +24,22 @@ public class CourseController {
 
     /**
      * 请求课程
+     *
      * @return
      */
     @RequestMapping("/query")
-    public String query(){
+    public String query() {
 //        System.out.println("请求课程的Controller");
         log.debug("请求课程的Controller");
-        List<User> users = (List<User>) stuFeign.list(1).getData();
-        System.out.println("获取到学生数据---》"+users);
-        return "课程信息，"+users;
+//        List<User> users = (List<User>) stuFeign.list(1).getData();
+        //请求学生
+        R result = stuFeign.list(1);
+        System.out.println("获取到学生数据---》" + result);
+        return "课程信息，" + result;
     }
 
     @RequestMapping("/getUserById")
-    public R getUserById(Integer id){
+    public R getUserById(Integer id) {
         R r = stuFeign.getById(id);
         System.out.println(r.getData());
         return r;
