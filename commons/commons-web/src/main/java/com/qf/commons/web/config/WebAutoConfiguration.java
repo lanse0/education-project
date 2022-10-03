@@ -3,6 +3,7 @@ package com.qf.commons.web.config;
 import com.qf.commons.web.aspect.LogMDCAspect;
 import com.qf.commons.web.exception.GlobalExceptionHandler;
 import com.qf.commons.web.exception.ResponseHandler;
+import com.qf.commons.web.sentinel.SentinelConfigInit;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,5 +40,10 @@ public class WebAutoConfiguration {
     @Bean
     public LogMDCAspect getLogMDCAspect(){
         return new LogMDCAspect();
+    }
+
+    @Bean
+    public SentinelConfigInit getSentinelConfigInit(){
+        return new SentinelConfigInit();
     }
 }

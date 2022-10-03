@@ -1,0 +1,5 @@
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 192.168.121.129:8858

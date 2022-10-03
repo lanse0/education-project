@@ -5,4 +5,4 @@ spring:
   sleuth:
     sampler:
       #链路采样率，默认0.1 哪些请求要采样 1 -> 100%
-      probability: 1
+      probability: 0.1
