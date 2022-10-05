@@ -3,9 +3,12 @@ package com.qf.business.course.controller;
 import com.qf.business.student.feign.StuFeign;
 import com.qf.commons.data.result.R;
 import com.qf.data.student.entity.User;
+import com.qf.data.student.vo.input.UserRegisterInput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -43,5 +46,24 @@ public class CourseController {
         R r = stuFeign.getById(id);
         System.out.println(r.getData());
         return r;
+    }
+
+    /**
+     * 插入学生测试
+     * @return
+     */
+    @RequestMapping("/insertStu")
+    @Transactional
+    public String insertStu() {
+        UserRegisterInput userRegisterInput = new UserRegisterInput();
+        userRegisterInput.setUsername("test");
+        userRegisterInput.setPassword("134");
+        userRegisterInput.setName("测试");
+        userRegisterInput.setAge(0);
+        userRegisterInput.setSex(0);
+        userRegisterInput.setRole(0);
+        R rs = stuFeign.insert(userRegisterInput);
+        System.out.println(1/0);
+        return "插入结果:" + rs;
     }
 }

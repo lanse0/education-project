@@ -19,7 +19,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <!--不会打包这个依赖 用于帮助编写 可以有提示-->
+            <!--不会打包这个依赖 用于帮助编写 可以有提示 编译时舍弃该依赖-->
             <scope>provided</scope>
         </dependency>
         <dependency>

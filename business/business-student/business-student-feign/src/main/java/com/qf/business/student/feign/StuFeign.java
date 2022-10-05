@@ -3,6 +3,7 @@ package com.qf.business.student.feign;
 import com.qf.commons.data.result.R;
 import com.qf.data.student.vo.input.UserRegisterInput;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,7 +29,7 @@ public interface StuFeign {
      * @return
      */
     @RequestMapping("/insert")
-    R insert(UserRegisterInput registerInput);
+    R insert(@RequestBody UserRegisterInput registerInput);
 
     /**
      * 修改用户信息

@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -70,7 +72,8 @@ public class StuController {
      * @return
      */
     @RequestMapping("/insert")
-    public R insert(@Valid UserRegisterInput registerInput){ //@Valid 参数验证注解配合实体类中的规则使用
+    @Transactional
+    public R insert(@Valid @RequestBody UserRegisterInput registerInput){ //@Valid 参数验证注解配合实体类中的规则使用
         log.debug("新增用户信息- {}", registerInput);
         //转换
         User user = new User();

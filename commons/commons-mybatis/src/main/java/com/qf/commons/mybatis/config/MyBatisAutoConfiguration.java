@@ -4,6 +4,7 @@ import com.qf.commons.mybatis.meta.DataMetaUpdate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * author 14526
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @MapperScan("com.qf.**.dao")
+@EnableTransactionManagement
 public class MyBatisAutoConfiguration {
 
     @Bean
