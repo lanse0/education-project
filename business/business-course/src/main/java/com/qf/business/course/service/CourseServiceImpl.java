@@ -1,5 +1,6 @@
 package com.qf.business.course.service;
 
+import com.qf.business.course.tcc.ICourseTcc;
 import com.qf.business.student.feign.StuFeign;
 import com.qf.commons.data.result.R;
 import com.qf.data.student.vo.input.UserRegisterInput;
@@ -18,6 +19,8 @@ public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     private StuFeign stuFeign;
+    @Autowired
+    private ICourseTcc courseTcc;
 
     @Override
     public String query() {
@@ -44,6 +47,10 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     @GlobalTransactional
     public String insertStu() {
+
+        //TCC的业务调用
+        courseTcc.query(10);
+
         UserRegisterInput userRegisterInput = new UserRegisterInput();
         userRegisterInput.setUsername("test");
         userRegisterInput.setPassword("134");
@@ -55,11 +62,11 @@ public class CourseServiceImpl implements ICourseService {
         R rs = stuFeign.insert(userRegisterInput);
 
         try {
-            Thread.sleep(60000);
+            Thread.sleep(65000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(1/0);
+//        System.out.println(1/0);
         return "插入结果:" + rs;
     }
 }

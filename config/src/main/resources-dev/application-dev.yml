@@ -7,3 +7,4 @@ spring:
       - feign
       - zipkin
       - sentinel
+      - seata

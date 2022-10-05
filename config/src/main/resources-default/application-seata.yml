@@ -1,0 +1,22 @@
+seata:
+  #配置seata注册到nacos
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: ${spring.cloud.nacos.server-addr}
+      group : "SEATA_GROUP"
+      namespace: "public"
+      username: "nacos"
+      password: "nacos"
+  #配置seata读取nacos配置中心
+  config:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.server-addr}
+      group: "SEATA_GROUP"
+      namespace: "seata"
+      username: "nacos"
+      password: "nacos"
+  #配置分布式事务组的名称
+  tx-service-group: my_test_tx_group
