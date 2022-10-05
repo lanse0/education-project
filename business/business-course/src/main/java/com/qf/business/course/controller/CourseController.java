@@ -4,6 +4,7 @@ import com.qf.business.student.feign.StuFeign;
 import com.qf.commons.data.result.R;
 import com.qf.data.student.entity.User;
 import com.qf.data.student.vo.input.UserRegisterInput;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +50,11 @@ public class CourseController {
     }
 
     /**
-     * 插入学生测试
+     * seata分布式事务测试
      * @return
      */
     @RequestMapping("/insertStu")
-    @Transactional
+    @GlobalTransactional
     public String insertStu() {
         UserRegisterInput userRegisterInput = new UserRegisterInput();
         userRegisterInput.setUsername("test");
@@ -62,7 +63,14 @@ public class CourseController {
         userRegisterInput.setAge(0);
         userRegisterInput.setSex(0);
         userRegisterInput.setRole(0);
+
         R rs = stuFeign.insert(userRegisterInput);
+
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println(1/0);
         return "插入结果:" + rs;
     }
