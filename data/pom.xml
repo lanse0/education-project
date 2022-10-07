@@ -31,7 +31,8 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>data-student</module>
+<!--        <module>data-student</module>-->
+        <module>data-user</module>
     </modules>
 
 

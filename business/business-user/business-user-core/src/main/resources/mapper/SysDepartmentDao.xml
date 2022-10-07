@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.business.user.core.dao.SysDepartmentDao">
+
+    <resultMap type="com.qf.data.user.entity.SysDepartment" id="SysDepartmentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="depName" column="dep_name" jdbcType="VARCHAR"/>
+        <result property="depCount" column="dep_count" jdbcType="INTEGER"/>
+        <result property="depInfo" column="dep_info" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.sys_department(dep_name, dep_count, dep_info, create_time, update_time, status, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.depName}, #{entity.depCount}, #{entity.depInfo}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.sys_department(dep_name, dep_count, dep_info, create_time, update_time, status, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.depName}, #{entity.depCount}, #{entity.depInfo}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+        on duplicate key update
+         dep_name = values(dep_name) , dep_count = values(dep_count) , dep_info = values(dep_info) , create_time = values(create_time) , update_time = values(update_time) , status = values(status) , del_flag = values(del_flag)     </insert>
+
+</mapper>
+

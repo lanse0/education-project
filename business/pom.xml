@@ -12,8 +12,9 @@
     <artifactId>business</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>business-student</module>
-        <module>business-course</module>
+<!--        <module>business-student</module>-->
+<!--        <module>business-course</module>-->
+        <module>business-user</module>
     </modules>
 
     <dependencies>
