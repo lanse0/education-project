@@ -12,7 +12,8 @@ public enum RCodes {
     FAIL(500, "服务器异常"),
     DATA_CHECKED_ERROR(401, "参数校验异常"),
     FLOW_ERROR(402, "请求被限流"),
-    DEGRADE_ERROR(403, "请求被熔断");
+    DEGRADE_ERROR(403, "请求被熔断"),
+    DATA_UNIQUE_ERROR(405, "数据已经存在");
 
     private Integer code;
     private String msg;
