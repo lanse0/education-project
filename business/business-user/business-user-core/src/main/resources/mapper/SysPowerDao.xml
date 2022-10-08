@@ -17,21 +17,33 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.sys_power(pid, power_name, power_res, power_type, power_info, create_time, update_time, status, del_flag)
+        insert into educationdb.sys_power(pid, power_name, power_res, power_type, power_info, create_time, update_time,
+        status, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.pid}, #{entity.powerName}, #{entity.powerRes}, #{entity.powerType}, #{entity.powerInfo}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.pid}, #{entity.powerName}, #{entity.powerRes}, #{entity.powerType}, #{entity.powerInfo},
+            #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.sys_power(pid, power_name, power_res, power_type, power_info, create_time, update_time, status, del_flag)
+        insert into educationdb.sys_power(pid, power_name, power_res, power_type, power_info, create_time, update_time,
+        status, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.pid}, #{entity.powerName}, #{entity.powerRes}, #{entity.powerType}, #{entity.powerInfo}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.pid}, #{entity.powerName}, #{entity.powerRes}, #{entity.powerType}, #{entity.powerInfo},
+            #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
         on duplicate key update
-         pid = values(pid) , power_name = values(power_name) , power_res = values(power_res) , power_type = values(power_type) , power_info = values(power_info) , create_time = values(create_time) , update_time = values(update_time) , status = values(status) , del_flag = values(del_flag)     </insert>
+        pid = values(pid) , power_name = values(power_name) , power_res = values(power_res) , power_type =
+        values(power_type) , power_info = values(power_info) , create_time = values(create_time) , update_time =
+        values(update_time) , status = values(status) , del_flag = values(del_flag)
+    </insert>
+
+    <!--    查询权限列表以及父权限的名称-->
+    <select id="queryPnameList" resultType="com.qf.data.user.dto.SysPowerPnameDto">
+        select a.*,b.power_name parentPowerName from sys_power a LEFT JOIN sys_power b on a.pid = b.id;
+    </select>
 
 </mapper>
 
