@@ -4,6 +4,7 @@ package com.qf.business.user.core.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qf.business.user.core.dao.SysPowerDao;
 import com.qf.business.user.core.service.SysPowerService;
+import com.qf.data.user.dto.SysPowerCheckDto;
 import com.qf.data.user.dto.SysPowerPnameDto;
 import com.qf.data.user.entity.SysPower;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,16 @@ public class SysPowerServiceImpl extends ServiceImpl<SysPowerDao, SysPower> impl
     @Override
     public List<SysPowerPnameDto> queryPnameList() {
         return getBaseMapper().queryPnameList();
+    }
+
+    /**
+     * 根据角色id 查询权限列表 并且获取当前角色拥有的权限
+     * @param rid
+     * @return
+     */
+    @Override
+    public List<SysPowerCheckDto> queryPowersCheckListByRid(Integer rid) {
+        return getBaseMapper().queryPowersCheckListByRid(rid);
     }
 }
 

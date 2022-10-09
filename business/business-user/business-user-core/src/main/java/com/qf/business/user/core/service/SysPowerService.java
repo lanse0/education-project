@@ -2,6 +2,7 @@ package com.qf.business.user.core.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qf.data.user.dto.SysPowerCheckDto;
 import com.qf.data.user.dto.SysPowerPnameDto;
 import com.qf.data.user.entity.SysPower;
 
@@ -15,5 +16,7 @@ import java.util.List;
  */
 public interface SysPowerService extends IService<SysPower> {
     List<SysPowerPnameDto> queryPnameList();
+
+    List<SysPowerCheckDto> queryPowersCheckListByRid(Integer rid);
 }
 

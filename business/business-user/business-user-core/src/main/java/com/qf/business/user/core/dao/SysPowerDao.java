@@ -2,6 +2,7 @@ package com.qf.business.user.core.dao;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qf.data.user.dto.SysPowerCheckDto;
 import com.qf.data.user.dto.SysPowerPnameDto;
 import com.qf.data.user.entity.SysPower;
 import org.apache.ibatis.annotations.Param;
@@ -34,5 +35,8 @@ public interface SysPowerDao extends BaseMapper<SysPower> {
     int insertOrUpdateBatch(@Param("entities") List<SysPower> entities);
 
     List<SysPowerPnameDto> queryPnameList();
+
+    List<SysPowerCheckDto> queryPowersCheckListByRid(Integer rid);
+
 }
 

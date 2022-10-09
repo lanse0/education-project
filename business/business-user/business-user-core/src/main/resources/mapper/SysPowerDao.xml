@@ -42,7 +42,17 @@
 
     <!--    查询权限列表以及父权限的名称-->
     <select id="queryPnameList" resultType="com.qf.data.user.dto.SysPowerPnameDto">
-        select a.*,b.power_name parentPowerName from sys_power a LEFT JOIN sys_power b on a.pid = b.id;
+        select a.*,b.power_name parentPowerName from sys_power a LEFT JOIN sys_power b on a.pid = b.id
+    </select>
+
+    <!--    根据角色id 查询权限列表 以及但前角色拥有的权限 -->
+    <select id="queryPowersCheckListByRid" resultType="com.qf.data.user.dto.SysPowerCheckDto">
+        select
+            *, (select if(count(*)>0,true,false) from sys_role_power where rid = #{rid} and powid = p.id) 'checked'
+        from
+            sys_power p
+        order by
+            p.power_type asc
     </select>
 
 </mapper>
