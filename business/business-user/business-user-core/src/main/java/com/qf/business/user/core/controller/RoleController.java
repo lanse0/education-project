@@ -5,6 +5,7 @@ import com.qf.commons.core.utils.QfBeanUtils;
 import com.qf.commons.data.result.R;
 import com.qf.data.user.entity.SysRole;
 import com.qf.data.user.vo.input.SysRoleInput;
+import com.qf.data.user.vo.input.SysSetRolePowerInput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,18 @@ public class RoleController {
         log.debug("[role insert] 角色新增 - {}",roleInput);
         SysRole sysRole = QfBeanUtils.copyBean(roleInput, SysRole.class);
         roleService.save(sysRole);
+        return R.create("succ");
+    }
+
+    /**
+     * 修改指定角色关联的权限信息
+     * @return
+     */
+    @RequestMapping("/updatePowers")
+    public R updateRoleAndPowers(SysSetRolePowerInput rolePowerInput){
+        log.debug("[set role powers] 设置角色的关联对象 - {}",rolePowerInput);
+        roleService.updateRolePowers(rolePowerInput);
+
         return R.create("succ");
     }
 }

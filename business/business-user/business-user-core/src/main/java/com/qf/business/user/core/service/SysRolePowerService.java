@@ -11,6 +11,6 @@ import com.qf.data.user.entity.SysRolePower;
  * @since 2022-10-07 15:56:34
  */
 public interface SysRolePowerService extends IService<SysRolePower> {
-
+    int deleteByRid(Integer rid);
 }
 
