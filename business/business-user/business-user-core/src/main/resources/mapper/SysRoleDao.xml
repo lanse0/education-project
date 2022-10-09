@@ -16,21 +16,31 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.sys_role(role_name, role_tag, role_info, dep_id, create_time, update_time, status, del_flag)
+        insert into educationdb.sys_role(role_name, role_tag, role_info, dep_id, create_time, update_time, status,
+        del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.roleName}, #{entity.roleTag}, #{entity.roleInfo}, #{entity.depId}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.roleName}, #{entity.roleTag}, #{entity.roleInfo}, #{entity.depId}, #{entity.createTime},
+            #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.sys_role(role_name, role_tag, role_info, dep_id, create_time, update_time, status, del_flag)
+        insert into educationdb.sys_role(role_name, role_tag, role_info, dep_id, create_time, update_time, status,
+        del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.roleName}, #{entity.roleTag}, #{entity.roleInfo}, #{entity.depId}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.roleName}, #{entity.roleTag}, #{entity.roleInfo}, #{entity.depId}, #{entity.createTime},
+            #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
         on duplicate key update
-         role_name = values(role_name) , role_tag = values(role_tag) , role_info = values(role_info) , dep_id = values(dep_id) , create_time = values(create_time) , update_time = values(update_time) , status = values(status) , del_flag = values(del_flag)     </insert>
+        role_name = values(role_name) , role_tag = values(role_tag) , role_info = values(role_info) , dep_id =
+        values(dep_id) , create_time = values(create_time) , update_time = values(update_time) , status = values(status)
+        , del_flag = values(del_flag)
+    </insert>
+    <select id="queryRoleDeptList" resultType="com.qf.data.user.dto.SysRoleDeptDto">
+        select a.*,b.dep_name deptName from sys_role a LEFT JOIN sys_department b on a.dep_id = b.id;
+    </select>
 
 </mapper>
 
