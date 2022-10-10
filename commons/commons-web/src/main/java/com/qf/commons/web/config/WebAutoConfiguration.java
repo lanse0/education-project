@@ -43,21 +43,4 @@ public class WebAutoConfiguration {
         return new LogMDCAspect();
     }
 
-    /**
-     * Sentinel读取nacos实例化配置
-     * @return
-     */
-    @Bean
-    public SentinelConfigInit getSentinelConfigInit(){
-        return new SentinelConfigInit();
-    }
-
-    /**
-     * sentinel流控的信息处理
-     * @return
-     */
-    @Bean
-    public SentinelExceptionHandler getSentinelExceptionHandler(){
-        return new SentinelExceptionHandler();
-    }
 }
