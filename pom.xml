@@ -123,6 +123,11 @@
                 <artifactId>data-user</artifactId>
                 <version>${qf.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>business-user-feign</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>io.github.verygoodwlk</groupId>

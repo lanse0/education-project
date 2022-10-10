@@ -3,7 +3,7 @@ package com.qf.business.user.core.controller;
 import com.qf.business.user.core.service.SysUserService;
 import com.qf.commons.core.utils.QfBeanUtils;
 import com.qf.commons.data.result.R;
-import com.qf.data.user.dto.SysUserDeptDto;
+import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
 import com.qf.data.user.vo.input.SysSetUserRoleInput;
 import com.qf.data.user.vo.input.SysUserInput;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * 后台用户管理
@@ -60,5 +59,17 @@ public class UserController {
         log.debug("[set user role] 设置用户角色 - {}",userRoleInput);
         userService.updateUserRoles(userRoleInput);
         return R.create("succ");
+    }
+
+    /**
+     * 根据用户名查询后台用户的信息
+     * @return
+     */
+    @RequestMapping("/queryUserByUn")
+    public R<SysUserPowerDto> queryUserByUn(String username){
+        log.debug("[query user byusername] 根据用户名查询用户信息 - {}",username);
+        SysUserPowerDto userPowerDto = userService.queryUserByUn(username);
+        log.debug("[query user byusername] 查询结果 - {}",userPowerDto);
+        return R.create(userPowerDto);
     }
 }

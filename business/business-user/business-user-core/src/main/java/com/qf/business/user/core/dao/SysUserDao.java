@@ -2,6 +2,7 @@ package com.qf.business.user.core.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qf.data.user.dto.SysUserDeptDto;
+import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,5 +34,7 @@ public interface SysUserDao extends BaseMapper<SysUser> {
     int insertOrUpdateBatch(@Param("entities") List<SysUser> entities);
 
     List<SysUserDeptDto> queryUserDeptList();
+
+    SysUserPowerDto queryUserByUn(String username);
 }
 

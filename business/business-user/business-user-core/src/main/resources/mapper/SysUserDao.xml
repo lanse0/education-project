@@ -14,6 +14,31 @@
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
     </resultMap>
+    <!--    用户以及用户权限的映射关系-->
+    <resultMap type="com.qf.data.user.dto.SysUserPowerDto" id="UserPowerDto">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="depId" column="dep_id" jdbcType="INTEGER"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        <collection property="powers" ofType="com.qf.data.user.entity.SysPower">
+            <result property="id" column="powid" jdbcType="INTEGER"/>
+            <result property="pid" column="pid" jdbcType="INTEGER"/>
+            <result property="powerName" column="power_name" jdbcType="VARCHAR"/>
+            <result property="powerRes" column="power_res" jdbcType="VARCHAR"/>
+            <result property="powerType" column="power_type" jdbcType="INTEGER"/>
+            <result property="powerInfo" column="power_info" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
@@ -39,8 +64,29 @@
         = values(sex) , create_time = values(create_time) , update_time = values(update_time) , status = values(status)
         , del_flag = values(del_flag)
     </insert>
+
+    <!--    查询用户信息以及用户的部门名称-->
     <select id="queryUserDeptList" resultType="com.qf.data.user.dto.SysUserDeptDto">
         select a.*,b.dep_name deptName from sys_user a left join sys_department b on a.dep_id = b.id
+    </select>
+
+    <!--    查询用户信息以及拥有的权限列表 当用户为超级管理员时 直接查出所有权限 -->
+    <select id="queryUserByUn" resultMap="UserPowerDto">
+        <if test="username=='admin'">
+            select u.*, p.id powid,p.* from sys_power p,sys_user u where u.username = 'admin'
+        </if>
+        <if test="username!='admin'">
+            select
+            u.*, p.id powid,p.*
+            from
+            sys_user u
+            left join sys_user_role ur on u.id = ur.uid
+            left join sys_role r on ur.rid = r.id
+            left join sys_role_power rp on r.id = rp.rid
+            left join sys_power p on rp.powid = p.id
+            where
+            u.username = #{username}
+        </if>
     </select>
 
 </mapper>

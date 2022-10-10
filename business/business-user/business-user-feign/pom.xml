@@ -11,5 +11,16 @@
 
     <artifactId>business-user-feign</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qf</groupId>
+            <artifactId>data-user</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>

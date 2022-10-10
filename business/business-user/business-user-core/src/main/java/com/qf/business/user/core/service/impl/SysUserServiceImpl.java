@@ -6,6 +6,7 @@ import com.qf.business.user.core.dao.SysUserDao;
 import com.qf.business.user.core.service.SysUserRoleService;
 import com.qf.business.user.core.service.SysUserService;
 import com.qf.data.user.dto.SysUserDeptDto;
+import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
 import com.qf.data.user.entity.SysUserRole;
 import com.qf.data.user.vo.input.SysSetUserRoleInput;
@@ -58,6 +59,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
                 .collect(Collectors.toList());
         //调用批量保存
         userRoleService.saveBatch(userRoles);
+    }
+
+    /**
+     * 根据用户名查询用户信息以及权限信息
+     * @param username
+     * @return
+     */
+    @Override
+    public SysUserPowerDto queryUserByUn(String username) {
+        return getBaseMapper().queryUserByUn(username);
     }
 }
 
