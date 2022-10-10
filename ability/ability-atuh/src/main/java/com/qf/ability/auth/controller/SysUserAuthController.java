@@ -1,5 +1,6 @@
 package com.qf.ability.auth.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.qf.ability.auth.entity.AuthInfo;
 import com.qf.ability.auth.service.IAuthService;
 import com.qf.commons.core.utils.JwtUtils;
@@ -35,8 +36,8 @@ public class SysUserAuthController {
         //登录逻辑
         BaseUser user = authService.login(authInfo);
 
-        //根据用户登录凭证 生成令牌
-        String loginToken = JwtUtils.createJwtToken("user", user);
+        //根据用户登录凭证 生成令牌 转为json字符串放进去 方便处理
+        String loginToken = JwtUtils.createJwtToken("user", JSON.toJSONString(user));
 
         return R.create(loginToken);
     }

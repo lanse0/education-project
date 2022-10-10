@@ -1,9 +1,6 @@
 package com.qf.commons.core.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -54,9 +51,14 @@ public class JwtUtils {
      * @return
      */
     public static <T> T parseJwtToken(String jwtToken, String key) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJws(jwtToken).getBody();
-        return (T) claims.get(key);
+        try {
+            Claims claims = Jwts.parser().setSigningKey(secretKey)
+                    .parseClaimsJws(jwtToken).getBody();
+            return (T) claims.get(key);
+        } catch (Throwable e) {
+            //若token过期或者篡改 返回空
+            return null;
+        }
     }
 
 //    public static void main(String[] args) {

@@ -12,5 +12,7 @@ spring:
         shared-configs:
           - data-id: gateway-config.yaml
             refresh: true
+          - data-id: gateway-ignore-url.yml
+            refresh: true
   profiles:
     active: @runtime-profile@

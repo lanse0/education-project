@@ -12,6 +12,10 @@
     <artifactId>ability-gateway</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
         <!--        gateway的依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

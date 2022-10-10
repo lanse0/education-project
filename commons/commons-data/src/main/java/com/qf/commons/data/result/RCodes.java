@@ -13,7 +13,8 @@ public enum RCodes {
     DATA_CHECKED_ERROR(401, "参数校验异常"),
     FLOW_ERROR(402, "请求被限流"),
     DEGRADE_ERROR(403, "请求被熔断"),
-    DATA_UNIQUE_ERROR(405, "数据已经存在");
+    DATA_UNIQUE_ERROR(405, "数据已经存在"),
+    AUTH_FAIL(406, "必须登录才可以访问该资源");
 
     private Integer code;
     private String msg;
