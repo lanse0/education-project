@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.qf.data.user.dto.SysRoleDeptDto;
 import com.qf.data.user.entity.SysRole;
 import com.qf.data.user.vo.input.SysSetRolePowerInput;
+import com.qf.data.user.dto.SysRoleCheckDto;
 
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface SysRoleService extends IService<SysRole> {
     List<SysRoleDeptDto> queryRoleDeptList();
 
     int updateRolePowers(SysSetRolePowerInput rolePowerInput);
+
+    List<SysRoleCheckDto> queryRolesByUid(Integer uid);
 }
 

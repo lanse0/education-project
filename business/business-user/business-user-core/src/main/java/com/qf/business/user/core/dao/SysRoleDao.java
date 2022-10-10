@@ -4,6 +4,7 @@ package com.qf.business.user.core.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qf.data.user.dto.SysRoleDeptDto;
 import com.qf.data.user.entity.SysRole;
+import com.qf.data.user.dto.SysRoleCheckDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,5 +35,7 @@ public interface SysRoleDao extends BaseMapper<SysRole> {
     int insertOrUpdateBatch(@Param("entities") List<SysRole> entities);
 
     List<SysRoleDeptDto> queryRoleDeptList();
+
+    List<SysRoleCheckDto> queryRolesByUid(Integer uid);
 }
 

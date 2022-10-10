@@ -8,6 +8,7 @@ import com.qf.data.user.dto.SysRoleDeptDto;
 import com.qf.data.user.entity.SysRole;
 import com.qf.data.user.entity.SysRolePower;
 import com.qf.data.user.vo.input.SysSetRolePowerInput;
+import com.qf.data.user.dto.SysRoleCheckDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
         sysRolePowerService.saveBatch(rolePowers);
 
         return 1;
+    }
+
+    /**
+     * 根据用户id 查询用户列表以及当前用户是否拥有当前角色
+     * @return
+     */
+    @Override
+    public List<SysRoleCheckDto> queryRolesByUid(Integer uid) {
+        return getBaseMapper().queryRolesByUid(uid);
     }
 }
 

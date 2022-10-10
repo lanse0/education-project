@@ -11,6 +11,6 @@ import com.qf.data.user.entity.SysUserRole;
  * @since 2022-10-07 14:46:22
  */
 public interface SysUserRoleService extends IService<SysUserRole> {
-
+    int deleteUserRoleByUid(Integer uid);
 }
 

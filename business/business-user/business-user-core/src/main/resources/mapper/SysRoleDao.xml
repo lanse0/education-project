@@ -38,8 +38,18 @@
         values(dep_id) , create_time = values(create_time) , update_time = values(update_time) , status = values(status)
         , del_flag = values(del_flag)
     </insert>
+    <!--    查询角色列表和对应的部门名称-->
     <select id="queryRoleDeptList" resultType="com.qf.data.user.dto.SysRoleDeptDto">
         select a.*,b.dep_name deptName from sys_role a LEFT JOIN sys_department b on a.dep_id = b.id;
+    </select>
+    <!--    根据用户id查询角色列表 以及拥有的角色-->
+    <select id="queryRolesByUid" resultType="com.qf.data.user.dto.SysRoleCheckDto">
+        SELECT
+            r.*,(SELECT if(count(*)>0,true,false) FROM sys_user_role WHERE rid = r.id AND uid = #{uid}) 'checked'
+        FROM
+            sys_role r
+        WHERE
+            r.dep_id = (SELECT dep_id FROM sys_user WHERE id = #{uid})
     </select>
 
 </mapper>
