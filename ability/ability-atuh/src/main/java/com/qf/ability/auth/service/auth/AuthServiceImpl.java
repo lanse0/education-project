@@ -45,7 +45,8 @@ public class AuthServiceImpl implements IAuthService {
             //密码不正确 或用户名不正确
             throw new ServiceException(500, "用户名不正确或密码不正确");
         }
-
+        //密码清空不返回前端
+        userPowerDto.setPassword("");
         return userPowerDto;
     }
 }

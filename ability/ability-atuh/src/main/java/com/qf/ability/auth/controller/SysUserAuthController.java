@@ -2,6 +2,7 @@ package com.qf.ability.auth.controller;
 
 import com.qf.ability.auth.entity.AuthInfo;
 import com.qf.ability.auth.service.IAuthService;
+import com.qf.commons.core.utils.JwtUtils;
 import com.qf.commons.data.base.BaseUser;
 import com.qf.commons.data.result.R;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class SysUserAuthController {
 
     @Autowired
     private IAuthService authService;
+
     /**
      * 后台管理系统的登录
      *
@@ -34,8 +36,8 @@ public class SysUserAuthController {
         BaseUser user = authService.login(authInfo);
 
         //根据用户登录凭证 生成令牌
+        String loginToken = JwtUtils.createJwtToken("user", user);
 
-
-        return R.create(user);
+        return R.create(loginToken);
     }
 }

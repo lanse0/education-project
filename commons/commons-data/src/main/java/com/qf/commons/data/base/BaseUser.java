@@ -1,6 +1,7 @@
 package com.qf.commons.data.base;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class BaseUser extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Integer id;
     //类型(用户端类型) - 0系统用户 1教师端用户 2学生端用户
+    @TableField(exist = false) //数据库中不存在该字段
     private Integer fromType;
 
 }
