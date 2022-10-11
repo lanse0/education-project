@@ -128,6 +128,7 @@ public class AuthGlobalFilter implements GlobalFilter {
             for (String loginPath : loginPaths) {
                 if (antPathMatcher.match(loginPath, url)) {
                     //只需要登录即可访问的url 放行
+                    log.debug("[gateway auth filter] 请求登录即可访问 - {}", url);
                     isPowers = false;
                     break;
                 }
@@ -136,17 +137,17 @@ public class AuthGlobalFilter implements GlobalFilter {
         //===========需要权限校验的===========
         if (isPowers && !baseUser.hasPowers(url)) {
             //需要进行权限校验，且用户不具有该url的权限
-            R r = R.create(RCodes.NO_POWER_ERROR);
+            R r = R.createFail(RCodes.NO_POWER_ERROR);
             return ResponseUtils.response(exchange, r);
         }
 
 
         //将用户信息 继续 往后传递
         //封装一个新的请求头 不能用旧的
-        HttpHeaders newHttpHeaders = new HttpHeaders();
-        newHttpHeaders.putAll(headers);//将旧的请求头信息设置给新的请求头对象
-        newHttpHeaders.add("uid", baseUser.getId() + "");//将登录用户的id放入请求头
-        newHttpHeaders.remove("loginToken");//删除令牌 无需往后传
+        HttpHeaders newHttpHeader = new HttpHeaders();
+        newHttpHeader.putAll(headers);//将旧的请求头信息设置给新的请求头对象
+        newHttpHeader.add("uid", baseUser.getId() + "");//将登录用户的id放入请求头
+        newHttpHeader.remove("loginToken");//删除令牌 无需往后传
 
         //准备一个新的请求
         //原本的请求uri对象
@@ -156,7 +157,7 @@ public class AuthGlobalFilter implements GlobalFilter {
         newRequest = new ServerHttpRequestDecorator(newRequest) {
             @Override
             public HttpHeaders getHeaders() {
-                return newHttpHeaders;
+                return newHttpHeader;
             }
         };
 

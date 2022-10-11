@@ -1,6 +1,7 @@
 package com.qf.commons.web.config;
 
 import com.qf.commons.web.aspect.LogMDCAspect;
+import com.qf.commons.web.aspect.LoginUserAspect;
 import com.qf.commons.web.exception.GlobalExceptionHandler;
 import com.qf.commons.web.exception.ResponseHandler;
 import com.qf.commons.web.sentinel.SentinelConfigInit;
@@ -43,4 +44,12 @@ public class WebAutoConfiguration {
         return new LogMDCAspect();
     }
 
+    /**
+     * 封装用户信息的AOP
+     * @return
+     */
+    @Bean
+    public LoginUserAspect getLoginUserAspect(){
+        return new LoginUserAspect();
+    }
 }
