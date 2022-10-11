@@ -73,7 +73,7 @@
     <!--    查询用户信息以及拥有的权限列表 当用户为超级管理员时 直接查出所有权限 -->
     <select id="queryUserByUn" resultMap="UserPowerDto">
         <if test="username=='admin'">
-            select u.*, p.id powid,p.* from sys_power p,sys_user u where u.username = 'admin'
+            select u.*, p.id powid,p.* from sys_power p,sys_user u where u.username = 'admin' order by p.id asc
         </if>
         <if test="username!='admin'">
             select
@@ -85,7 +85,7 @@
             left join sys_role_power rp on r.id = rp.rid
             left join sys_power p on rp.powid = p.id
             where
-            u.username = #{username}
+            u.username = #{username} order by p.id asc
         </if>
     </select>
 
