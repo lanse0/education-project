@@ -16,3 +16,9 @@ spring:
             refresh: true
   profiles:
     active: @runtime-profile@
+
+#根据请求来源的用户类型 配置信息
+request:
+  fromType:
+    # 0 - 后台管理系统  用户转换对象 - com\qf\data\user\dto\SysUserPowerDto.java
+    0: com.qf.data.user.dto.SysUserPowerDto

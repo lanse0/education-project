@@ -14,7 +14,8 @@ public enum RCodes {
     FLOW_ERROR(402, "请求被限流"),
     DEGRADE_ERROR(403, "请求被熔断"),
     DATA_UNIQUE_ERROR(405, "数据已经存在"),
-    AUTH_FAIL(406, "必须登录才可以访问该资源");
+    AUTH_FAIL(406, "必须登录才可以访问该资源"),
+    NO_POWER_ERROR(407, "权限不足");
 
     private Integer code;
     private String msg;

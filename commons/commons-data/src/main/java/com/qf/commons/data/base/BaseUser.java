@@ -19,4 +19,15 @@ public class BaseUser extends BaseEntity {
     @TableField(exist = false) //数据库中不存在该字段
     private Integer fromType;
 
+    /**
+     * 进行权限校验
+     *
+     * @param requestUrl
+     * @return
+     */
+    public boolean hasPowers(String requestUrl) {
+        //默认返回true 需要权限的具体情况由子类确认
+        return true;
+    }
+
 }
