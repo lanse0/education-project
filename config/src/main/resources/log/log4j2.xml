@@ -89,6 +89,12 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
             <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
             <DefaultRolloverStrategy max="15"/>
         </RollingFile>
+
+        <!-- skywalking输出器 -->
+        <GRPCLogClientAppender name="SkywalkingLog">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </GRPCLogClientAppender>
     </appenders>
     <!--Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。-->
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
@@ -102,6 +108,7 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
+            <appender-ref ref="SkywalkingLog"/>
         </asyncroot>
         <!-- 过滤 让自己的debug日志可以输出到控制台 additivity=false 关闭日志输出的继承 -->
         <asynclogger name="com.qf" level="debug" additivity="false" includeLocation="true">
@@ -110,6 +117,7 @@ monitorInterval log4j能够自动检测修改配置文件和重新配置本身�
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
+            <appender-ref ref="SkywalkingLog"/>
         </asynclogger>
         <!-- 异步输出器
         <asynclogger name="com.qf" level="debug" additivity="false" includeLocation="true">
