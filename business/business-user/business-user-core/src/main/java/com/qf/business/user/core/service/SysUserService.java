@@ -6,6 +6,7 @@ import com.qf.data.user.dto.SysUserDeptDto;
 import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
 import com.qf.data.user.vo.input.SysSetUserRoleInput;
+import com.qf.data.user.vo.input.SysUserSearchInput;
 
 import java.util.List;
 
@@ -21,5 +22,7 @@ public interface SysUserService extends IService<SysUser> {
     void updateUserRoles(SysSetUserRoleInput userRoleInput);
 
     SysUserPowerDto queryUserByUn(String username);
+
+    List<SysUser> search(SysUserSearchInput searchInput);
 }
 

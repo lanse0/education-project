@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qf.data.user.dto.SysUserDeptDto;
 import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
+import com.qf.data.user.vo.input.SysUserSearchInput;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -36,5 +37,7 @@ public interface SysUserDao extends BaseMapper<SysUser> {
     List<SysUserDeptDto> queryUserDeptList();
 
     SysUserPowerDto queryUserByUn(String username);
+
+    List<SysUser> search(SysUserSearchInput searchInput);
 }
 

@@ -89,5 +89,23 @@
         </if>
     </select>
 
+    <!--    根据条件搜索用户列表 &lt; ==> "<" -->
+    <select id="search" resultType="com.qf.data.user.entity.SysUser">
+        select * from sys_user
+        <where>
+            <if test="keyword!=null">
+                and (username like concat('%',#{keyword},'%') or name like concat('%',#{keyword},'%'))
+            </if>
+            <if test="sex!=null">
+                and sex = #{sex}
+            </if>
+            <if test="beginTime!=null">
+                and create_time >= #{beginTime}
+            </if>
+            <if test="endTime!=null">
+                <![CDATA[and create_time <= #{endTime}]]>
+            </if>
+        </where>
+    </select>
 </mapper>
 

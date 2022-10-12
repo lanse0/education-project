@@ -10,6 +10,7 @@ import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
 import com.qf.data.user.entity.SysUserRole;
 import com.qf.data.user.vo.input.SysSetUserRoleInput;
+import com.qf.data.user.vo.input.SysUserSearchInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +70,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
     @Override
     public SysUserPowerDto queryUserByUn(String username) {
         return getBaseMapper().queryUserByUn(username);
+    }
+
+    /**
+     * 根据条件查询用户列表
+     * @param searchInput
+     * @return
+     */
+    @Override
+    public List<SysUser> search(SysUserSearchInput searchInput) {
+        return getBaseMapper().search(searchInput);
     }
 }
 

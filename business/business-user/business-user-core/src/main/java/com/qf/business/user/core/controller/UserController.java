@@ -7,6 +7,7 @@ import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
 import com.qf.data.user.vo.input.SysSetUserRoleInput;
 import com.qf.data.user.vo.input.SysUserInput;
+import com.qf.data.user.vo.input.SysUserSearchInput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +34,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/list")
-    public R list() {
-        return R.create(userService.queryUserDeptList());
+    public R list(SysUserSearchInput searchInput) {
+        return R.create(userService.search(searchInput));
     }
 
     /**
