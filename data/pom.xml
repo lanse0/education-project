@@ -33,6 +33,7 @@
     <modules>
 <!--        <module>data-student</module>-->
         <module>data-user</module>
+        <module>data-notify</module>
     </modules>
 
 

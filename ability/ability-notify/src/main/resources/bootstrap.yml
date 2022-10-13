@@ -1,0 +1,10 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: notify-server
+  cloud:
+    nacos:
+      server-addr: @nacos-server@
+  profiles:
+    active: @runtime-profile@
