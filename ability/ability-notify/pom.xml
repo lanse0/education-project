@@ -20,6 +20,11 @@
             <groupId>com.qf</groupId>
             <artifactId>data-notify</artifactId>
         </dependency>
+        <!--        发邮件-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

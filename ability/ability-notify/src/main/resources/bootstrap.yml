@@ -8,3 +8,15 @@ spring:
       server-addr: @nacos-server@
   profiles:
     active: @runtime-profile@
+#邮件相关配置
+  mail:
+    host: smtp.163.com
+    protocol: smtp
+    #发送方的邮箱名称
+    username: lanse1521@163.com
+    password: FMJJODXFJKXMHIYJ
+
+#管理员邮箱 接收告警邮件
+admin:
+  email: 1452682801@qq.com
+
