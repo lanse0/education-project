@@ -15,6 +15,7 @@
         <module>ability-gateway</module>
         <module>ability-atuh</module>
         <module>ability-notify</module>
+        <module>ability-search</module>
     </modules>
 
     <properties>
