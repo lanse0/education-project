@@ -35,8 +35,6 @@ public class UserController {
      */
     @RequestMapping("/list")
     public R list(SysUserSearchInput searchInput) {
-        //skywalking告警测试
-        System.out.println(1/0);
         return R.create(userService.search(searchInput));
     }
 
