@@ -5,6 +5,10 @@ import com.qf.ability.test.entity.Goods;
 import com.qf.ability.test.service.IGoodsService;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.Avg;
+import org.elasticsearch.search.aggregations.metrics.AvgAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -125,8 +129,22 @@ public class SearchTestApplication {
 //                .withUnit("km");
 //        query.addSort(Sort.by(location));
 
+        //添加聚合
+//        RangeAggregationBuilder rangeAggregationBuilder = new RangeAggregationBuilder("price_group");
+//        rangeAggregationBuilder.addRange(0,1000);
+//        rangeAggregationBuilder.addRange(1000,Double.MAX_VALUE);
+//        AvgAggregationBuilder price_group_avg = new AvgAggregationBuilder("price_group_avg");
+//        price_group_avg.field("price");
+//        rangeAggregationBuilder.subAggregation(price_group_avg);
+        //设置聚合操作
+//        query.addAggregation(rangeAggregationBuilder);
+
         //term搜索 通过实体类判断去那个索引库搜索
         SearchHits<Goods> hits = template.search(query, Goods.class);
+
+        //获得搜索出来的聚合结果
+//        Aggregations aggregations = hits.getAggregations();
+
         //获得搜索的结果列表
         List<SearchHit<Goods>> searchHits = hits.getSearchHits();
         System.out.println(hits);
