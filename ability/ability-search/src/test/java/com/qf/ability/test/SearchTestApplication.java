@@ -3,6 +3,7 @@ package com.qf.ability.test;
 import com.qf.ability.search.application.SearchApplication;
 import com.qf.ability.test.entity.Goods;
 import com.qf.ability.test.service.IGoodsService;
+import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+import org.springframework.data.elasticsearch.core.query.GeoDistanceOrder;
 import org.springframework.data.elasticsearch.core.query.HighlightQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.Query;
@@ -40,7 +43,7 @@ public class SearchTestApplication {
         System.out.println("创建状态：" + flag);
 
         boolean mapping = goodsService.createMapping();
-        System.out.println("创建映射类型状态："+mapping);
+        System.out.println("创建映射类型状态：" + mapping);
 
         Goods goods = new Goods()
                 .setId(1)
@@ -77,8 +80,8 @@ public class SearchTestApplication {
         //multi_match查询
         //MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery("美的洗衣机", "title", "info");
         MultiMatchQueryBuilder multiMatchQuery = QueryBuilders.multiMatchQuery("美的洗衣机")
-                .field("title",20)
-                .field("info",1);
+                .field("title", 20)
+                .field("info", 1);
         //range查询
         RangeQueryBuilder price = QueryBuilders.rangeQuery("price").gte(1000).lte(3000);
 
@@ -90,6 +93,9 @@ public class SearchTestApplication {
                 .should(QueryBuilders.boolQuery()
                         .must(QueryBuilders.matchQuery("title", "电视机"))
                         .must(QueryBuilders.rangeQuery("price").gte(2000)));
+
+        //创建一个查询对象
+        //Query query = new NativeSearchQuery(boolQuery);
 
         //查询全部
         MatchAllQueryBuilder matchAllQuery = QueryBuilders.matchAllQuery();
@@ -104,15 +110,27 @@ public class SearchTestApplication {
         highlightBuilder.field("title").preTags("<font color='red'>").postTags("</font>");
         query.setHighlightQuery(new HighlightQuery(highlightBuilder));
 
-        //创建一个查询对象
-        //Query query = new NativeSearchQuery(boolQuery);
+        //地理坐标的搜索
+//        QueryBuilders.geoDistanceQuery("location")
+//                .point(22, 114).distance(10, DistanceUnit.KILOMETERS);
+        //矩形区域搜索
+//        QueryBuilders.geoBoundingBoxQuery("location")
+//                .setCorners(new GeoPoint(22,114),new GeoPoint(23,115));
+        //多边形区域搜索
+//        QueryBuilders.geoPolygonQuery("location",List<GeoPoint>);
+        //按照距离排序
+//        GeoDistanceOrder location = new GeoDistanceOrder("location",new GeoPoint(22,114));
+//        location.with(Sort.Direction.ASC)
+//                .with(GeoDistanceOrder.DistanceType.plane)
+//                .withUnit("km");
+//        query.addSort(Sort.by(location));
 
         //term搜索 通过实体类判断去那个索引库搜索
         SearchHits<Goods> hits = template.search(query, Goods.class);
         //获得搜索的结果列表
         List<SearchHit<Goods>> searchHits = hits.getSearchHits();
         System.out.println(hits);
-        System.out.println("搜索的结果数量："+hits.getTotalHits());
+        System.out.println("搜索的结果数量：" + hits.getTotalHits());
         for (SearchHit<Goods> searchHit : searchHits) {
             //SearchHit -> 表示一个查询结果记录 （Document）
             Goods goods = searchHit.getContent();
