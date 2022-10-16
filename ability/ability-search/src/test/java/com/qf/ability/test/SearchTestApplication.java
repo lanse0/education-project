@@ -3,8 +3,13 @@ package com.qf.ability.test;
 import com.qf.ability.search.application.SearchApplication;
 import com.qf.ability.test.entity.Goods;
 import com.qf.ability.test.service.IGoodsService;
+import jdk.nashorn.internal.runtime.FunctionScope;
+import org.elasticsearch.common.lucene.search.function.CombineFunction;
+import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.index.query.functionscore.FieldValueFactorFunctionBuilder;
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.Avg;
@@ -26,6 +31,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -138,6 +144,20 @@ public class SearchTestApplication {
 //        rangeAggregationBuilder.subAggregation(price_group_avg);
         //设置聚合操作
 //        query.addAggregation(rangeAggregationBuilder);
+
+        //function_score 加强评分
+//        List<FunctionScoreQueryBuilder.FilterFunctionBuilder> functionBuilders = new ArrayList<>();
+        //添加多个评分函数
+//        functionBuilders.add(
+//                new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+//                new FieldValueFactorFunctionBuilder("price").setWeight(0.0005f)));
+        //functionBuilders.add()
+//        FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(
+//                QueryBuilders.matchAllQuery(),
+//                functionBuilders.toArray(new FunctionScoreQueryBuilder.FilterFunctionBuilder[0])
+//        );
+//        functionScoreQueryBuilder.boostMode(CombineFunction.MULTIPLY); //加强评分和原始评分的合并函数
+//        functionScoreQueryBuilder.scoreMode(FunctionScoreQuery.ScoreMode.MULTIPLY); //多个评分函数之间的合并函数
 
         //term搜索 通过实体类判断去那个索引库搜索
         SearchHits<Goods> hits = template.search(query, Goods.class);
