@@ -48,12 +48,12 @@ public class SearchTestApplication {
 
     @Test
     public void test() {
-        System.out.println("创建索引库");
-        boolean flag = goodsService.createIndex();
-        System.out.println("创建状态：" + flag);
+//        System.out.println("创建索引库");
+//        boolean flag = goodsService.createIndex();
+//        System.out.println("创建状态：" + flag);
 
-        boolean mapping = goodsService.createMapping();
-        System.out.println("创建映射类型状态：" + mapping);
+//        boolean mapping = goodsService.createMapping();
+//        System.out.println("创建映射类型状态：" + mapping);
 
         Goods goods = new Goods()
                 .setId(1)

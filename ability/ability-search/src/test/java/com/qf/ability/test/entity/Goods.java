@@ -3,10 +3,7 @@ package com.qf.ability.test.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -21,7 +18,20 @@ import java.util.Date;
 public class Goods {
     @Id
     private Integer id;
-    @Field(type = FieldType.Text, index = true, store = false, analyzer = "ik_max_word")
+    //@Field(type = FieldType.Text, index = true, store = false, analyzer = "ik_max_word")
+    /**
+     * @MultiField 表示一个字段，使用多个字段类型
+     *
+     * mainField 表示当前字段的主类型，类型名称就是title
+     * otherField 表示当前字段的副类型，类型名称就是title.a
+     */
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, index = true, store = false, analyzer = "ik_max_word"),
+            otherFields = {
+                    @InnerField(suffix = "pinyin", type = FieldType.Text, analyzer = "pinyin"),
+                    @InnerField(suffix = "keyword",type = FieldType.Keyword)
+            }
+    )
     private String title;
     @Field(type = FieldType.Double)
     private Double price;
