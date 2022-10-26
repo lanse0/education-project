@@ -90,11 +90,6 @@
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <dependency>
-                <groupId>io.github.verygoodwlk</groupId>
-                <artifactId>ken-page-boot-starter</artifactId>
-                <version>${ken-page.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -154,6 +149,12 @@
                 <version>${qf.version}</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>io.github.verygoodwlk</groupId>
+                <artifactId>ken-page-boot-starter</artifactId>
+                <version>${ken-page.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.github.verygoodwlk</groupId>
                 <artifactId>ken-page-mybatis-commons</artifactId>
