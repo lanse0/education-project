@@ -1,5 +1,7 @@
 package com.qf.commons.core.config;
 
+import com.qf.commons.core.utils.ApplicationUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,4 +15,12 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan({"com.qf.business", "com.qf.ability"})
 public class CoreAutoConfiguration {
 
+    /**
+     * 手动注册 手动获取bean工具类
+     * @return
+     */
+    @Bean
+    public ApplicationUtils getApplicationUtils(){
+        return new ApplicationUtils();
+    }
 }

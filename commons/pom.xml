@@ -16,6 +16,7 @@
         <module>commons-core</module>
         <module>commons-data</module>
         <module>commons-mybatis</module>
+        <module>commons-redis</module>
     </modules>
 
 
