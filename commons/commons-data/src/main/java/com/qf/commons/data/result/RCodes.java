@@ -15,7 +15,8 @@ public enum RCodes {
     DEGRADE_ERROR(403, "请求被熔断"),
     DATA_UNIQUE_ERROR(405, "数据已经存在"),
     AUTH_FAIL(406, "必须登录才可以访问该资源"),
-    NO_POWER_ERROR(407, "权限不足");
+    NO_POWER_ERROR(407, "权限不足"),
+    TOKEN_GET_ERROR(408,"服务器繁忙，请稍后重试");
 
     private Integer code;
     private String msg;

@@ -34,7 +34,16 @@
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>io.github.verygoodwlk</groupId>
+            <artifactId>ken-event-boot-starter</artifactId>
+            <version>1.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.qf</groupId>

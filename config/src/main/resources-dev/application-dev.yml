@@ -9,3 +9,4 @@ spring:
       - seata
       - jackson
       - rabbitmq
+      - redis
