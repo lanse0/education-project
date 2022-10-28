@@ -1,13 +1,12 @@
-package com.qf.commons.redis.utils.lock;
+package com.qf.commons.redis.lock;
 
-import com.qf.commons.redis.utils.annotation.KLock;
+import com.qf.commons.redis.annotation.KLock;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.annotation.Order;
-import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -28,7 +27,7 @@ public class LockAspect {
     //局部变量表参数名称发现器
     private LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
 
-    @Around("@annotation(com.qf.commons.redis.utils.annotation.KLock)")
+    @Around("@annotation(com.qf.commons.redis.annotation.KLock)")
     public Object lockAop(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         try {

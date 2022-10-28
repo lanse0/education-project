@@ -1,4 +1,4 @@
-package com.qf.commons.redis.utils.annotation;
+package com.qf.commons.redis.annotation;
 
 import java.lang.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.qf.commons.redis.utils.lock;
+package com.qf.commons.redis.lock;
 
 import org.redisson.api.RLock;
 

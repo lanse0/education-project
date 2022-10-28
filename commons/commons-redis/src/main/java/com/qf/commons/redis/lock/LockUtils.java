@@ -1,4 +1,4 @@
-package com.qf.commons.redis.utils.lock;
+package com.qf.commons.redis.lock;
 
 import com.qf.commons.core.utils.ApplicationUtils;
 import lombok.extern.slf4j.Slf4j;
