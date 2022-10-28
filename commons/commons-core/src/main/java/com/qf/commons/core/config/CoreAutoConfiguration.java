@@ -20,7 +20,7 @@ public class CoreAutoConfiguration {
      * @return
      */
     @Bean
-    public ApplicationUtils getApplicationUtils(){
+    public ApplicationUtils getApplicationUtils2(){
         return new ApplicationUtils();
     }
 }
