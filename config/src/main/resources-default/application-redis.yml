@@ -3,3 +3,9 @@ spring:
     host: 192.168.121.129
     port: 6379
     password: root
+  cache:
+    #使用redis作为缓存容器
+    type: redis
+    redis:
+      #过期时间 ms
+      time-to-live: 300000

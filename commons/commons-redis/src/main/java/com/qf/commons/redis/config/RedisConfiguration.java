@@ -1,6 +1,7 @@
-package com.qf.commons.redis.utils.config;
+package com.qf.commons.redis.config;
 
-import com.qf.commons.redis.utils.lock.LockAspect;
+import com.qf.commons.redis.lock.LockAspect;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,10 +11,12 @@ import org.springframework.context.annotation.Configuration;
  * create_time 2022/10/28
  */
 @Configuration
+@EnableCaching //开启redis缓存
 public class RedisConfiguration {
 
     @Bean
     public LockAspect getLockAspect(){
+        System.out.println("自动装配生效");
         return new LockAspect();
     }
 }

@@ -156,6 +156,11 @@
                 <artifactId>data-notify</artifactId>
                 <version>${qf.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>commons-redis</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
 
 
             <dependency>

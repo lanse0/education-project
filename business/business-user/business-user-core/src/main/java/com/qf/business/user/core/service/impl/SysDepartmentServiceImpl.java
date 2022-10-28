@@ -6,8 +6,12 @@ import com.qf.business.user.core.service.SysDepartmentService;
 import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.result.RCodes;
 import com.qf.data.user.entity.SysDepartment;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 部门表(SysDepartment)表服务实现类
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("sysDepartmentService")
 @Transactional
+@CacheConfig(cacheNames = "depcache")
 public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentDao, SysDepartment> implements SysDepartmentService {
 
     /**
@@ -28,10 +33,21 @@ public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentDao, SysD
     public boolean save(SysDepartment entity) {
         //判断部门是否存在
         Long count = this.query().eq("dep_name", entity.getDepName()).count();
-        if (count>0){
+        if (count > 0) {
             throw new ServiceException(RCodes.DATA_UNIQUE_ERROR);
         }
         return super.save(entity);
+    }
+
+    /**
+     * 查询所有
+     */
+    @Override
+    //使用缓存 调用此方法前 先查询缓存mycache是否有deplist 存在则直接返回 不会执行此方法 否则会调用此方法并通过key重建到缓存池
+    @Cacheable(key = "'deplist'")
+    public List<SysDepartment> list() {
+        System.out.println("查询了数据库");
+        return super.list();
     }
 }
 
