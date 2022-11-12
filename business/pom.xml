@@ -74,10 +74,6 @@
             <groupId>com.qf</groupId>
             <artifactId>config</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.qf</groupId>
-            <artifactId>commons-redis</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

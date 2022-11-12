@@ -19,7 +19,7 @@ public class TimeTask {
      * Cron表达式 实现大部分定时需求
      * cron = "0 * * * * ?" 每分钟的第0秒执行一次
      */
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 * 20 * * ?")
     public void task(){
         System.out.println("---------定时任务-------"+new Date());
     }

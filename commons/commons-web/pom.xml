@@ -54,6 +54,12 @@
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
         </dependency>
 
+        <!-- xxl-job核心依赖 -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+
 
         <!--        data里的R对象 只有具有控制器的模块需要使用 就是引用了web依赖的模块 所以R对象也放到这里和web一起被依赖-->
         <dependency>
@@ -67,6 +73,10 @@
         <dependency>
             <groupId>com.qf</groupId>
             <artifactId>commons-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qf</groupId>
+            <artifactId>commons-redis</artifactId>
         </dependency>
     </dependencies>
 
