@@ -16,7 +16,7 @@ public class RedisConfiguration {
 
     @Bean
     public LockAspect getLockAspect(){
-        System.out.println("自动装配生效");
+        System.out.println("redis分布式锁自动装配生效");
         return new LockAspect();
     }
 }

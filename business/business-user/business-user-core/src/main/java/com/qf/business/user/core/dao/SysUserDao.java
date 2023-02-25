@@ -38,6 +38,6 @@ public interface SysUserDao extends BaseMapper<SysUser> {
 
     SysUserPowerDto queryUserByUn(String username);
 
-    List<SysUser> search(SysUserSearchInput searchInput);
+    List<SysUserDeptDto> search(SysUserSearchInput searchInput);
 }
 

@@ -90,8 +90,8 @@
     </select>
 
     <!--    根据条件搜索用户列表 &lt; ==> "<" -->
-    <select id="search" resultType="com.qf.data.user.entity.SysUser">
-        select * from sys_user
+    <select id="search" resultType="com.qf.data.user.dto.SysUserDeptDto">
+        select u.*,d.dep_name deptName from sys_user u left join sys_department d on u.dep_id = d.id
         <where>
             <if test="keyword!=null">
                 and (username like concat('%',#{keyword},'%') or name like concat('%',#{keyword},'%'))

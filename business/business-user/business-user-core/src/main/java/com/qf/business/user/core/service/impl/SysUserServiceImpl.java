@@ -78,7 +78,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
      * @return
      */
     @Override
-    public List<SysUser> search(SysUserSearchInput searchInput) {
+    public List<SysUserDeptDto> search(SysUserSearchInput searchInput) {
         return getBaseMapper().search(searchInput);
     }
 }

@@ -23,6 +23,6 @@ public interface SysUserService extends IService<SysUser> {
 
     SysUserPowerDto queryUserByUn(String username);
 
-    List<SysUser> search(SysUserSearchInput searchInput);
+    List<SysUserDeptDto> search(SysUserSearchInput searchInput);
 }
 
