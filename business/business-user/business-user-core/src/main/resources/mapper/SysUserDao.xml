@@ -94,16 +94,16 @@
         select u.*,d.dep_name deptName from sys_user u left join sys_department d on u.dep_id = d.id
         <where>
             <if test="keyword!=null">
-                and (username like concat('%',#{keyword},'%') or name like concat('%',#{keyword},'%'))
+                and (u.username like concat('%',#{keyword},'%') or u.name like concat('%',#{keyword},'%'))
             </if>
             <if test="sex!=null">
-                and sex = #{sex}
+                and u.sex = #{sex}
             </if>
             <if test="beginTime!=null">
-                and create_time >= #{beginTime}
+                and u.create_time >= #{beginTime}
             </if>
             <if test="endTime!=null">
-                <![CDATA[and create_time <= #{endTime}]]>
+                <![CDATA[and u.create_time <= #{endTime}]]>
             </if>
         </where>
     </select>

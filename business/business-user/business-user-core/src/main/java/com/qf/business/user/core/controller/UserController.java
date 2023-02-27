@@ -2,7 +2,10 @@ package com.qf.business.user.core.controller;
 
 import com.qf.business.user.core.service.SysUserService;
 import com.qf.commons.core.utils.QfBeanUtils;
+import com.qf.commons.data.base.BaseUser;
 import com.qf.commons.data.result.R;
+import com.qf.commons.web.aspect.annotation.GetUser;
+import com.qf.commons.web.utils.UserUtils;
 import com.qf.data.user.dto.SysUserPowerDto;
 import com.qf.data.user.entity.SysUser;
 import com.qf.data.user.vo.input.SysSetUserRoleInput;
@@ -34,7 +37,10 @@ public class UserController {
      * @return
      */
     @RequestMapping("/list")
+    @GetUser//获取登录的用户
     public R list(SysUserSearchInput searchInput) {
+        BaseUser user = UserUtils.getUser();
+        System.out.println("登录的用户："+user);
         return R.create(userService.search(searchInput));
     }
 

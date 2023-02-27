@@ -7,7 +7,6 @@ import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.result.RCodes;
 import com.qf.data.user.entity.SysDepartment;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +43,7 @@ public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentDao, SysD
      */
     @Override
     //使用缓存 调用此方法前 先查询缓存mycache是否有deplist 存在则直接返回 不会执行此方法 否则会调用此方法并通过key重建到缓存池
-    @Cacheable(key = "'deplist'")
+    //@Cacheable(key = "'deplist'")
     public List<SysDepartment> list() {
         System.out.println("查询了数据库");
         return super.list();
