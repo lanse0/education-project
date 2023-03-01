@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class Email {
+public class Email implements Serializable {
     //标题
     private String subject;
     //接收方

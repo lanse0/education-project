@@ -36,10 +36,10 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <!--        链路追踪-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -58,6 +58,11 @@
         <dependency>
             <groupId>com.xuxueli</groupId>
             <artifactId>xxl-job-core</artifactId>
+        </dependency>
+        <!-- 事件总线的相关依赖 -->
+        <dependency>
+            <groupId>io.github.verygoodwlk</groupId>
+            <artifactId>ken-event-boot-starter</artifactId>
         </dependency>
 
 

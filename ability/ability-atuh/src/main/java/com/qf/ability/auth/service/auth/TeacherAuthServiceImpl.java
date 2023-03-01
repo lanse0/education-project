@@ -2,8 +2,11 @@ package com.qf.ability.auth.service.auth;
 
 import com.qf.ability.auth.entity.AuthInfo;
 import com.qf.ability.auth.service.IAuthService;
+import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.base.BaseUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,9 +18,24 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class TeacherAuthServiceImpl implements IAuthService {
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     @Override
     public BaseUser login(AuthInfo authInfo) {
-
-        return null;
+        //校验验证码
+        String code = authInfo.getCode();
+        //获取保存在redis中的验证码
+        String okCode = redisTemplate.opsForValue().get("code::" + authInfo.getEmail());
+        if (code.equals(okCode)) {
+            //通过邮箱去数据库查询信息 返回给前端
+            log.debug("[login succ] 登录（注册）成功！");
+            //登录成功 删除验证码
+            redisTemplate.delete("code::" + authInfo.getEmail());
+            return null;
+        }
+        //验证码不正确
+        log.debug("[login error] 验证码错误！");
+        throw new ServiceException(500, "验证码错误！");
     }
 }

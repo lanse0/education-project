@@ -36,6 +36,7 @@
         <apm-toolkit-log4j-2.x.version>8.9.0</apm-toolkit-log4j-2.x.version>
         <redisson.version>3.13.6</redisson.version>
         <xxl-job.version>2.3.0</xxl-job.version>
+        <ken-event.version>1.0</ken-event.version>
     </properties>
 
     <dependencyManagement>
@@ -119,6 +120,12 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+            <!-- 事件总线的相关依赖 -->
+            <dependency>
+                <groupId>io.github.verygoodwlk</groupId>
+                <artifactId>ken-event-boot-starter</artifactId>
+                <version>${ken-event.version}</version>
             </dependency>
 
 
