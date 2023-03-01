@@ -6,19 +6,19 @@ import com.qf.business.user.feign.SysUserFeign;
 import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.base.BaseUser;
 import com.qf.commons.data.result.R;
-import com.qf.commons.data.result.RCodes;
 import com.qf.data.user.dto.SysUserPowerDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * 系统管理用户接口
  * author 14526
  * create_time 2022/10/10
  */
-@Service
+@Service("authService0") //给Bean一个名字  以便不同客户端用户注入不同的IAuthService
 @Slf4j
-public class AuthServiceImpl implements IAuthService {
+public class SysAuthServiceImpl implements IAuthService {
 
     @Autowired
     private SysUserFeign sysUserFeign;

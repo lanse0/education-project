@@ -11,6 +11,13 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class AuthInfo {
+
+    //请求来源 0 后台管理 1 教师端 2 学生
+    private Integer fromType;
+
     private String username;
     private String password;
+
+    private String email;
+    private String code;
 }
