@@ -16,6 +16,7 @@
         <module>ability-atuh</module>
         <module>ability-notify</module>
         <module>ability-search</module>
+        <module>ability-file</module>
     </modules>
 
     <properties>
