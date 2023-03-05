@@ -2,6 +2,7 @@ package com.qf.ability.auth.service.auth;
 
 import com.qf.ability.auth.entity.AuthInfo;
 import com.qf.ability.auth.service.IAuthService;
+import com.qf.business.user.feign.TeacherFeign;
 import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.base.BaseUser;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,14 @@ public class TeacherAuthServiceImpl implements IAuthService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Autowired
+    private TeacherFeign teacherFeign;
+
+    /**
+     * 登录（注册接口）
+     * @param authInfo
+     * @return
+     */
     @Override
     public BaseUser login(AuthInfo authInfo) {
         //校验验证码
@@ -32,7 +41,8 @@ public class TeacherAuthServiceImpl implements IAuthService {
             log.debug("[login succ] 登录（注册）成功！");
             //登录成功 删除验证码
             redisTemplate.delete("code::" + authInfo.getEmail());
-            return null;
+
+            return teacherFeign.queryTeacherByEmail(authInfo.getEmail()).getData();
         }
         //验证码不正确
         log.debug("[login error] 验证码错误！");

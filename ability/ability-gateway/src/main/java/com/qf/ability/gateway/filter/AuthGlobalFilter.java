@@ -71,7 +71,7 @@ public class AuthGlobalFilter implements GlobalFilter {
         //登录的用户
         BaseUser baseUser = null;
         //若用户已登录 解析用户
-        if (userJson != null) {
+        if (userJson != null && !"".equals(userJson)) {
             //判断来源类型(客户端) 将userJson 转换为 相应的dto对象
             Map<String, String> userTypeMap = authUserTypeConfig.getFromType();
             log.debug("[gateway auth filter] 获取请求来源对应的用户类型 - {}", userTypeMap);

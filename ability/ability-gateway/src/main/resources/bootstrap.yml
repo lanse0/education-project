@@ -22,3 +22,4 @@ request:
   fromType:
     # 0 - 后台管理系统  用户转换对象 - com\qf\data\user\dto\SysUserPowerDto.java
     0: com.qf.data.user.dto.SysUserPowerDto
+    1: com.qf.data.user.entity.Teacher

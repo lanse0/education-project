@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * author 14526
  * create_time 2022/10/10
  */
-@FeignClient("user-server")
+@FeignClient(value = "user-server",contextId = "sysUser")
 @RequestMapping("/sys/user")
 public interface SysUserFeign {
 
