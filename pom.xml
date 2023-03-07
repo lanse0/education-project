@@ -174,6 +174,11 @@
                 <artifactId>commons-redis</artifactId>
                 <version>${qf.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>data-course</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
 
 
             <dependency>

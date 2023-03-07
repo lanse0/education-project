@@ -34,6 +34,7 @@
 <!--        <module>data-student</module>-->
         <module>data-user</module>
         <module>data-notify</module>
+        <module>data-course</module>
     </modules>
 
 

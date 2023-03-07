@@ -15,12 +15,12 @@ public class DataMetaUpdate implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         metaObject.setValue("createTime", new Date());
         metaObject.setValue("updateTime", new Date());
-        metaObject.setValue("status", 0);
+//        metaObject.setValue("status", 0);
         metaObject.setValue("delFlag", 0);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        metaObject.setValue("updateTime",new Date());
+        metaObject.setValue("updateTime", new Date());
     }
 }

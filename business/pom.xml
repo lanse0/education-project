@@ -15,6 +15,7 @@
 <!--        <module>business-student</module>-->
 <!--        <module>business-course</module>-->
         <module>business-user</module>
+        <module>business-course</module>
     </modules>
 
     <dependencies>

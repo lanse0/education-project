@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.business.course.dao.CourseTypeDao">
+
+    <resultMap type="com.qf.data.course.entity.CourseType" id="CourseTypeMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="tname" column="tname" jdbcType="VARCHAR"/>
+        <result property="tag" column="tag" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.course_type(pid, tname, tag, create_time, update_time, STATUS, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.pid}, #{entity.tname}, #{entity.tag}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.course_type(pid, tname, tag, create_time, update_time, STATUS, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.pid}, #{entity.tname}, #{entity.tag}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+        on duplicate key update
+         pid = values(pid) , tname = values(tname) , tag = values(tag) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag)     </insert>
+
+</mapper>
+

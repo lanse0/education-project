@@ -21,8 +21,8 @@ public class BaseEntity implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     //状态
-    @TableField(fill = FieldFill.INSERT)
-    private Integer status;
+//    @TableField(fill = FieldFill.INSERT)
+    private Integer status = 0;
     //删除表示 0可用 1删除
     @TableField(fill = FieldFill.INSERT)
     private Integer delFlag;
