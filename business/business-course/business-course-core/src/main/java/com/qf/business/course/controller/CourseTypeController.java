@@ -1,18 +1,20 @@
 package com.qf.business.course.controller;
 
+import com.qf.business.course.service.CourseTypeGuigeService;
 import com.qf.business.course.service.CourseTypeService;
 import com.qf.commons.data.result.R;
 import com.qf.data.course.entity.CourseType;
+import com.qf.data.course.entity.CourseTypeGuige;
+import com.qf.data.course.vo.input.TypeGuigesInput;
 import com.qf.data.course.vo.output.CourseTypeTreeNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * author 14526
@@ -25,6 +27,9 @@ public class CourseTypeController {
 
     @Autowired
     private CourseTypeService courseTypeService;
+
+    @Autowired
+    private CourseTypeGuigeService typeGuigeService;
 
     /**
      * 根据树形结构查询分类的列表
@@ -85,4 +90,33 @@ public class CourseTypeController {
 
         return R.create("succ");
     }
+
+    /**
+     * 修改课程分类和 规格的关联关系
+     *
+     * @return
+     */
+    @RequestMapping("/updateGuiges")
+    public R updateGuiges(TypeGuigesInput input) {
+        log.debug("[update type guiges] 设置分类的规格信息 - {} ", input);
+        courseTypeService.updateTypeGuiges(input);
+        return R.create(null);
+    }
+
+    /**
+     * 查询课程拥有的规格列表
+     *
+     * @param tid
+     * @return
+     */
+    @RequestMapping("/guigeSelected")
+    public R guigeSelected(Integer tid) {
+        //前端只需要id 用stream流将查出来的对象list转换为只有id的list
+        List<Integer> tids = typeGuigeService.query().eq("tid", tid).list().stream().map(
+                typeGuige -> typeGuige.getGid()
+        ).collect(Collectors.toList());
+
+        return R.create(tids);
+    }
+
 }

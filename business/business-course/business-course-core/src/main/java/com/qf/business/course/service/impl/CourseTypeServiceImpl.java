@@ -2,10 +2,19 @@ package com.qf.business.course.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qf.business.course.dao.CourseTypeDao;
+import com.qf.business.course.service.CourseTypeGuigeService;
 import com.qf.business.course.service.CourseTypeService;
 import com.qf.commons.core.utils.CommonsUtils;
 import com.qf.data.course.entity.CourseType;
+import com.qf.data.course.entity.CourseTypeGuige;
+import com.qf.data.course.vo.input.TypeGuigesInput;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 课程分类表(CourseType)表服务实现类
@@ -15,6 +24,9 @@ import org.springframework.stereotype.Service;
  */
 @Service("courseTypeService")
 public class CourseTypeServiceImpl extends ServiceImpl<CourseTypeDao, CourseType> implements CourseTypeService {
+
+    @Autowired
+    private CourseTypeGuigeService courseTypeGuigeService;
 
     /**
      * 插入一条记录（选择字段，策略插入）
@@ -27,15 +39,44 @@ public class CourseTypeServiceImpl extends ServiceImpl<CourseTypeDao, CourseType
 
         //查询父级分类
         CourseType parent = this.getById(entity.getPid());
-        if (parent!=null){
+        if (parent != null) {
             //设置当前分类的flag 这里不设置自身的id 用的时候再拼接 避免过程复杂
             entity.setTag(parent.getTag() != null ? (parent.getTag() + CommonsUtils.id2Str(parent.getId(), 4)) : CommonsUtils.id2Str(parent.getId(), 4));
             //设置当前分类的级别
             entity.setStatus(parent.getStatus() + 1);
-        }else {
+        } else {
+            //父分类为空 设置当前分类为第一级
             entity.setStatus(1);
         }
 
         return super.save(entity);
+    }
+
+    /**
+     * 修改课程类型的规格关联
+     *
+     * @param typeGuigesInput
+     * @return
+     */
+    @Override
+    public int updateTypeGuiges(TypeGuigesInput typeGuigesInput) {
+
+        //先删除当前课程类型的关联信息
+        Map map = new HashMap();
+        map.put("tid",typeGuigesInput.getTid());
+        courseTypeGuigeService.removeByMap(map);
+        //再插入课程的规格关联信息
+        List<CourseTypeGuige> typeGuiges = typeGuigesInput.getGid().stream().map(
+                gid -> new CourseTypeGuige().setTid(typeGuigesInput.getTid()).setGid(gid)
+        ).collect(Collectors.toList());
+        courseTypeGuigeService.saveBatch(typeGuiges);
+
+//        lamboad 表达式 stream流 把int类型的list转换成string类型：
+//        List<Integer> a = new ArrayList<>();
+//        List<String> stringList = a.stream().map(
+//                i -> i + ""
+//        ).collect(Collectors.toList());
+
+        return 1;
     }
 }

@@ -1,5 +1,7 @@
 server:
   port: 80
+  #  最大请求头 KB
+  max-http-header-size: 102400
 spring:
   application:
     name: gateway

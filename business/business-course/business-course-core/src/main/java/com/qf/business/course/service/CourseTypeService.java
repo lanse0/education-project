@@ -2,6 +2,7 @@ package com.qf.business.course.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.qf.data.course.entity.CourseType;
+import com.qf.data.course.vo.input.TypeGuigesInput;
 
 /**
  * 课程分类表(CourseType)表服务接口
@@ -11,5 +12,6 @@ import com.qf.data.course.entity.CourseType;
  */
 public interface CourseTypeService extends IService<CourseType> {
 
+    int updateTypeGuiges(TypeGuigesInput typeGuigesInput);
 }
 
