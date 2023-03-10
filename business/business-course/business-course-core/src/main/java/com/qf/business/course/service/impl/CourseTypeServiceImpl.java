@@ -10,6 +10,7 @@ import com.qf.data.course.entity.CourseTypeGuige;
 import com.qf.data.course.vo.input.TypeGuigesInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +60,7 @@ public class CourseTypeServiceImpl extends ServiceImpl<CourseTypeDao, CourseType
      * @return
      */
     @Override
+    @Transactional
     public int updateTypeGuiges(TypeGuigesInput typeGuigesInput) {
 
         //先删除当前课程类型的关联信息

@@ -3,6 +3,7 @@ package com.qf.business.course.controller;
 import com.qf.business.course.service.CourseTypeGuigeService;
 import com.qf.business.course.service.CourseTypeService;
 import com.qf.commons.data.result.R;
+import com.qf.data.course.dto.CourseGuigeDto;
 import com.qf.data.course.entity.CourseType;
 import com.qf.data.course.entity.CourseTypeGuige;
 import com.qf.data.course.vo.input.TypeGuigesInput;
@@ -119,4 +120,16 @@ public class CourseTypeController {
         return R.create(tids);
     }
 
+    /**
+     * 查询课程类型拥有的规格列表
+     *
+     * @param tid
+     * @return
+     */
+    @RequestMapping("/guigeListSelected")
+    public R guigeListSelected(Integer tid) {
+        List<CourseGuigeDto> courseGuigeDtos = typeGuigeService.queryGuigesByTid(tid);
+        log.debug("[query course guiges] 查询指定课程的规格列表 - {}",courseGuigeDtos);
+        return R.create(courseGuigeDtos);
+    }
 }

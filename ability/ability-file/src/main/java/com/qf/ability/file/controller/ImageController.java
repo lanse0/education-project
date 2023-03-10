@@ -1,5 +1,6 @@
 package com.qf.ability.file.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qf.commons.data.result.R;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -24,10 +25,12 @@ public class ImageController {
     private String uploadPath = "D://imgs";
 
     /**
-     * 文件上传
+     * @param file
+     * @param type 模块标识 识别从哪上传的图片 返回相应的回参
+     * @return
      */
     @RequestMapping("/uploader")
-    public R uploader(MultipartFile file) {
+    public Object uploader(MultipartFile file, Integer type) {
 
         File myFile = new File(uploadPath); //创建一个文件对象
         if (!myFile.exists()) myFile.mkdirs(); //若文件夹不存在 创建该文件夹
@@ -49,9 +52,23 @@ public class ImageController {
         } catch (IOException e) {
             throw new RuntimeException();
         }
-        //把文件名返回
         log.debug("[file uploader] 文件上传成功 - {}", uploadPath + "/" + fileName);
-        return R.create(fileName);
+
+
+        if (type != null && type == 1) {
+            //editor模块上传的图片 配置特定的返回参数
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("errno", 0);
+
+            JSONObject jsonObject2 = new JSONObject();
+            jsonObject2.put("url", "http://localhost/file/img/download?imgName=" + fileName);
+
+            jsonObject.put("data", jsonObject2);
+            return jsonObject.toJSONString();
+        } else {
+            //把文件名返回
+            return R.create(fileName);
+        }
     }
 
     /**

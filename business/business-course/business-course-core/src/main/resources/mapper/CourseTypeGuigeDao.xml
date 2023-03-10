@@ -16,7 +16,7 @@
         insert into educationdb.course_type_guige(create_time, update_time, STATUS, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
@@ -27,7 +27,27 @@
             (#{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
         on duplicate key update
-         create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag)     </insert>
+        create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag =
+        values(del_flag)
+    </insert>
 
+    <resultMap type="com.qf.data.course.dto.CourseGuigeDto" id="CourseGuigeDtoMap">
+        <id property="id" column="id"/>
+        <result property="gname" column="gname" jdbcType="VARCHAR"/>
+        <result property="info" column="info" jdbcType="VARCHAR"/>
+        <collection property="vals" ofType="com.qf.data.course.entity.CourseGuigeVal">
+            <id property="id" column="vid"/>
+            <result property="val" column="val"/>
+        </collection>
+    </resultMap>
+    <!--    根据课程的分类ID 查询课程分类关联规格列表和规格的值列表-->
+    <select id="queryGuigesByTid" resultMap="CourseGuigeDtoMap">
+        SELECT
+            g.*,gv.*,gv.id vid
+        FROM
+            ( SELECT * FROM course_type_guige WHERE tid = #{tid} ) t1
+            JOIN course_guige g ON t1.gid = g.id
+            JOIN course_guige_val gv ON g.id = gv.gid;
+    </select>
 </mapper>
 

@@ -3,6 +3,9 @@ kenplugin:
   page:
     webconfig:
       enable: true
+  auto:
+    mapping:
+      enable: true
     #定义参数名字
 #    key:
 #      num: a
