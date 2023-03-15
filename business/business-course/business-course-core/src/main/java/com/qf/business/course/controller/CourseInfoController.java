@@ -1,8 +1,10 @@
 package com.qf.business.course.controller;
 
 import com.qf.business.course.service.CourseInfoService;
+import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.data.base.BaseUser;
 import com.qf.commons.data.result.R;
+import com.qf.commons.data.result.RCodes;
 import com.qf.commons.web.aspect.annotation.GetUser;
 import com.qf.commons.web.utils.UserUtils;
 import com.qf.data.course.vo.input.CourseInfoInput;
@@ -34,6 +36,8 @@ public class CourseInfoController {
     public R listByTid() {
         BaseUser teacher = UserUtils.getUser();
         log.debug("[listByTId] - 登录的用户：- {}", teacher);
+        //暂时解决前端未登录发送请求 返回未登录异常
+        if (teacher == null) throw new ServiceException(RCodes.AUTH_FAIL);
         return R.create(courseInfoService.queryByTid(teacher.getId()));
     }
 

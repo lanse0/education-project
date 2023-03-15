@@ -13,10 +13,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.qf</groupId>
-            <artifactId>commons-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
@@ -25,6 +21,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <!--只在测试环境生效 就不会被打包了-->
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qf</groupId>
+            <artifactId>data-course</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qf</groupId>
+            <artifactId>commons-web</artifactId>
         </dependency>
     </dependencies>
 
