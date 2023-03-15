@@ -129,7 +129,18 @@ public class CourseTypeController {
     @RequestMapping("/guigeListSelected")
     public R guigeListSelected(Integer tid) {
         List<CourseGuigeDto> courseGuigeDtos = typeGuigeService.queryGuigesByTid(tid);
-        log.debug("[query course guiges] 查询指定课程的规格列表 - {}",courseGuigeDtos);
+        log.debug("[query course guiges] 查询指定课程的规格列表 - {}", courseGuigeDtos);
         return R.create(courseGuigeDtos);
+    }
+
+    /**
+     * 查询所有一级分类
+     *
+     * @return
+     */
+    @RequestMapping("/queryOneType")
+    public R queryOneType() {
+        List<CourseType> list = courseTypeService.query().eq("status", 1).list();
+        return R.create(list);
     }
 }

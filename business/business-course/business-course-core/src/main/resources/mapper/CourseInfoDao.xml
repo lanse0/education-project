@@ -20,21 +20,35 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.course_info(teacher_id, tid, subject, fengmian, info, price, begin_time, end_time, create_time, update_time, STATUS, del_flag)
+        insert into educationdb.course_info(teacher_id, tid, subject, fengmian, info, price, begin_time, end_time,
+        create_time, update_time, STATUS, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.teacherId}, #{entity.tid}, #{entity.subject}, #{entity.fengmian}, #{entity.info}, #{entity.price}, #{entity.beginTime}, #{entity.endTime}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.teacherId}, #{entity.tid}, #{entity.subject}, #{entity.fengmian}, #{entity.info}, #{entity.price},
+            #{entity.beginTime}, #{entity.endTime}, #{entity.createTime}, #{entity.updateTime}, #{entity.status},
+            #{entity.delFlag})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.course_info(teacher_id, tid, subject, fengmian, info, price, begin_time, end_time, create_time, update_time, STATUS, del_flag)
+        insert into educationdb.course_info(teacher_id, tid, subject, fengmian, info, price, begin_time, end_time,
+        create_time, update_time, STATUS, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.teacherId}, #{entity.tid}, #{entity.subject}, #{entity.fengmian}, #{entity.info}, #{entity.price}, #{entity.beginTime}, #{entity.endTime}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.teacherId}, #{entity.tid}, #{entity.subject}, #{entity.fengmian}, #{entity.info}, #{entity.price},
+            #{entity.beginTime}, #{entity.endTime}, #{entity.createTime}, #{entity.updateTime}, #{entity.status},
+            #{entity.delFlag})
         </foreach>
         on duplicate key update
-         teacher_id = values(teacher_id) , tid = values(tid) , subject = values(subject) , fengmian = values(fengmian) , info = values(info) , price = values(price) , begin_time = values(begin_time) , end_time = values(end_time) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag)     </insert>
+        teacher_id = values(teacher_id) , tid = values(tid) , subject = values(subject) , fengmian = values(fengmian) ,
+        info = values(info) , price = values(price) , begin_time = values(begin_time) , end_time = values(end_time) ,
+        create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag =
+        values(del_flag)
+    </insert>
 
+    <select id="queryByOneType" resultType="com.qf.data.course.entity.CourseInfo">
+        select *
+        from course_info c join (select id from course_type where tag like concat(#{tid},'%') and status = 3) t on c.tid = t.id;
+    </select>
 </mapper>
 

@@ -16,5 +16,7 @@ public interface CourseInfoService extends IService<CourseInfo> {
     List<CourseInfo> queryByTid(Integer tid);
 
     int save(CourseInfoInput courseInfoInput);
+
+    List<CourseInfo> queryByOneType(Integer tid);
 }
 

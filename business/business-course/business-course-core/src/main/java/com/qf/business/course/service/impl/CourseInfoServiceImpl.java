@@ -3,9 +3,11 @@ package com.qf.business.course.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qf.business.course.dao.CourseInfoDao;
 import com.qf.business.course.service.CourseInfoGuigeService;
+import com.qf.commons.core.utils.CommonsUtils;
 import com.qf.commons.core.utils.QfBeanUtils;
 import com.qf.commons.web.aspect.annotation.GetUser;
 import com.qf.commons.web.utils.UserUtils;
@@ -84,7 +86,21 @@ public class CourseInfoServiceImpl extends ServiceImpl<CourseInfoDao, CourseInfo
         //保存课程规格关联关系
         courseInfoGuigeService.saveBatch(courseInfoGuiges);
 
+
+
         return 1;
+    }
+
+    /**
+     * 根据指定的一级分类id查询分类下的所有课程信息
+     * @param tid
+     * @return
+     */
+    @Override
+    public List<CourseInfo> queryByOneType(Integer tid) {
+        String idStr = CommonsUtils.id2Str(tid, 4);
+
+        return getBaseMapper().queryByOneType(idStr);
     }
 }
 

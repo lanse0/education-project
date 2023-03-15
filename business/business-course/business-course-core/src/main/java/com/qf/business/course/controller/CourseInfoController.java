@@ -50,4 +50,14 @@ public class CourseInfoController {
         courseInfoService.save(courseInfoInput);
         return R.create("succ");
     }
+
+    /**
+     * 根据一级分类查询分类下所有课程
+     * @param tid 一级分类id
+     * @return
+     */
+    @RequestMapping("/queryByOneType")
+    public R queryByOneType(Integer tid){
+        return R.create(courseInfoService.queryByOneType(tid));
+    }
 }
