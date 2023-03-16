@@ -67,6 +67,8 @@ public class CourseTypeServiceImpl extends ServiceImpl<CourseTypeDao, CourseType
         Map map = new HashMap();
         map.put("tid",typeGuigesInput.getTid());
         courseTypeGuigeService.removeByMap(map);
+        //规格列表为空
+        if (typeGuigesInput.getGid() == null || typeGuigesInput.getGid().size() == 0) return 1;
         //再插入课程的规格关联信息
         List<CourseTypeGuige> typeGuiges = typeGuigesInput.getGid().stream().map(
                 gid -> new CourseTypeGuige().setTid(typeGuigesInput.getTid()).setGid(gid)
