@@ -1,6 +1,9 @@
 package com.qf.ability.search.service;
 
 import com.qf.ability.search.entity.SearchCourseEntity;
+import com.qf.ability.search.entity.SearchParam;
+
+import java.util.List;
 
 /**
  * author 14526
@@ -20,4 +23,11 @@ public interface ICourseIndexSearchService {
      * @return
      */
     boolean saveCourse(SearchCourseEntity searchCourseEntity);
+
+    /**
+     * 进行业务搜索
+     * @param searchParam
+     * @return
+     */
+    List<SearchCourseEntity> searchByParam(SearchParam searchParam);
 }
