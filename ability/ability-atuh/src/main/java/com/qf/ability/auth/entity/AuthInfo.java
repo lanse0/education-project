@@ -18,6 +18,10 @@ public class AuthInfo {
     private String username;
     private String password;
 
-    private String email;
-    private String code;
+    private String email;//教师登录邮箱
+    private String code;//邮箱动态验证码
+
+    private String wxCode;//微信小程序端的code码
+    private String header;//头像
+    private String nickname;//昵称
 }

@@ -96,3 +96,17 @@ create table course_info_guige(
 	del_flag TINYINT COMMENT '删除标识',
 	PRIMARY key (cid,cgid,cgvid)
 ) comment '课程信息和规格关联表';
+
+-- 小程序端的用户表信息
+create table wx_user(
+	id int primary key auto_increment comment '主键',
+	openid varchar(50) unique not null comment '小程序端的开发id',
+	unionid varchar(50) unique comment '小程序端的用户在开放平台下的唯一id',
+	session_key varchar(50) not null comment '会话密钥',
+	nickname varchar(20) comment '小程序端的用户昵称',
+	header text comment '小程序端的头像',
+	create_time datetime COMMENT '创建时间',
+	update_time datetime COMMENT '最后修改时间',
+	STATUS TINYINT COMMENT '状态',
+	del_flag TINYINT COMMENT '删除标识'
+) comment '小程序端的用户表';

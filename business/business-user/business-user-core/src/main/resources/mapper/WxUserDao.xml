@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.business.user.core.dao.WxUserDao">
+
+    <resultMap type="com.qf.data.user.entity.WxUser" id="WxUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="openid" column="openid" jdbcType="VARCHAR"/>
+        <result property="unionid" column="unionid" jdbcType="VARCHAR"/>
+        <result property="sessionKey" column="session_key" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="header" column="header" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+        on duplicate key update
+         openid = values(openid) , unionid = values(unionid) , session_key = values(session_key) , nickname = values(nickname) , header = values(header) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag)     </insert>
+
+</mapper>
+
