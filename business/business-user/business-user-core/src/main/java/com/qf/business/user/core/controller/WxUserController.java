@@ -31,4 +31,15 @@ public class WxUserController {
 
         return R.create(wxUser);
     }
+
+    /**
+     * 保存用户修改的信息
+     * @param wxUserInput
+     * @return
+     */
+    @RequestMapping("/updateWxUser")
+    public R updateWxUser(WxUserInput wxUserInput){
+        wxUserService.updateWxUser(wxUserInput);
+        return R.create("succ");
+    }
 }

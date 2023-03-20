@@ -5,6 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qf.business.user.core.dao.WxUserDao;
 import com.qf.commons.core.exception.ServiceException;
+import com.qf.commons.core.utils.QfBeanUtils;
+import com.qf.commons.data.base.BaseUser;
+import com.qf.commons.web.aspect.annotation.GetUser;
+import com.qf.commons.web.utils.UserUtils;
 import com.qf.data.user.entity.WxUser;
 import com.qf.business.user.core.service.WxUserService;
 import com.qf.data.user.vo.input.WxUserInput;
@@ -41,7 +45,7 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserDao, WxUser> implements
         String response = restTemplate.getForObject("https://api.weixin.qq.com/sns/jscode2session?appid=wxa1dbf1e19fb8a5d9&secret=ff03a021d28a6c100d1aa358524438b1&js_code=" + code + "&grant_type=authorization_code", String.class);
         log.debug("[wx login] 小程序端登录 - {}", response);
         JSONObject jsonObject = JSON.parseObject(response);
-        Integer errorCode = (Integer) jsonObject.get("error"); //微信接口文档返回码 0 请求成功
+        Integer errorCode = (Integer) jsonObject.get("errcode"); //微信接口文档返回码 0 请求成功
         if (errorCode != null && errorCode != 0) {
             throw new ServiceException(500, "小程序端登录异常");
         }
@@ -62,6 +66,21 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserDao, WxUser> implements
         }
 
         return wxUser;
+    }
+
+    /**
+     * 保存用户修改的信息
+     *
+     * @param wxUserInput
+     * @return
+     */
+    @Override
+    @GetUser
+    public boolean updateWxUser(WxUserInput wxUserInput) {
+        BaseUser user = UserUtils.getUser();
+        WxUser wxUser = QfBeanUtils.copyBean(wxUserInput, WxUser.class);
+        wxUser.setId(user.getId());
+        return this.updateById(wxUser);
     }
 }
 

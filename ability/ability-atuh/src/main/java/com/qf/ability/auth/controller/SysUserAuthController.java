@@ -42,10 +42,12 @@ public class SysUserAuthController {
 //        System.out.println(fromType);
 
         //通过容器获取客户端对应的实现类
-        IAuthService authService = (IAuthService) applicationContext.getBean("authService"+authInfo.getFromType());
+        IAuthService authService = (IAuthService) applicationContext.getBean("authService" + authInfo.getFromType());
 
         //登录逻辑
         BaseUser user = authService.login(authInfo);
+
+        log.debug("[user login] 用户的信息 - {}", user);
 
         //根据用户登录凭证 生成令牌 转为json字符串放进去 方便处理
         String loginToken = JwtUtils.createJwtToken("user", JSON.toJSONString(user));

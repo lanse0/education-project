@@ -79,4 +79,14 @@ public class UserController {
         log.debug("[query user byusername] 查询结果 - {}",userPowerDto);
         return R.create(userPowerDto);
     }
+
+    /**
+     * 给前端一个接口 验证token是否过期  已过期清空token跳转到登录页
+     */
+    @RequestMapping("/testToken")
+    @GetUser
+    public void testToken(){
+        BaseUser user = UserUtils.getUser();
+        log.debug("[user login] 令牌状态校验：- {}",user);
+    }
 }

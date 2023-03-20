@@ -13,5 +13,12 @@ import com.qf.data.user.vo.input.WxUserInput;
 public interface WxUserService extends IService<WxUser> {
 
     WxUser login(WxUserInput wxUserInput);
+
+    /**
+     * 保存用户修改的信息
+     * @param wxUserInput
+     * @return
+     */
+    boolean updateWxUser(WxUserInput wxUserInput);
 }
 
