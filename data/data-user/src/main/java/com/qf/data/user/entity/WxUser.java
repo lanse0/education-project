@@ -25,5 +25,7 @@ public class WxUser extends BaseUser {
     private String nickname;
     //小程序端的头像
     private String header;
+    //用户积分(发红包使用)
+    private Integer score;
 }
 

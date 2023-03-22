@@ -110,3 +110,47 @@ create table wx_user(
 	STATUS TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '小程序端的用户表';
+
+-- 给微信用户表添加一个字段 积分
+alter table wx_user add column score int not null default 0 comment '用户积分';
+-- 积分流水表
+create table wx_score_details(
+	id int primary key auto_increment comment '主键',
+	uid int not null comment '用户id',
+	source_score int not null comment '原始积分',
+	action_score int not null comment '操作积分',
+	target tinyint not null comment '积分来源 0-发红包 1-抢红包 2-充值 3-活动 ... ',
+	busid int comment '业务id',
+	create_time datetime COMMENT '创建时间',
+	update_time datetime COMMENT '最后修改时间',
+	STATUS TINYINT COMMENT '状态',
+	del_flag TINYINT COMMENT '删除标识'
+) comment '积分流水表';
+
+-- 红包表
+create table red_envelopes(
+	id int primary key auto_increment comment '红包id',
+	uid int not null comment '发送者id',
+	scount int not null comment '红包的积分总额 - 红包有多少积分',
+	number int not null comment '红包的份数',
+	type tinyint not null comment '红包的类型 0-固定 1-随机',
+	info varchar(20) comment '红包信息',
+	timeout datetime comment '红包过期时间',
+	create_time datetime COMMENT '创建时间',
+	update_time datetime COMMENT '最后修改时间',
+	STATUS TINYINT COMMENT '状态 0-待领取 1-领取完 2-红包过期',
+	del_flag TINYINT COMMENT '删除标识'
+) comment '红包表';
+
+-- 红包详情表
+create table red_envelopes_details(
+	id int primary key auto_increment comment '红包明细id',
+	redid int not null comment '红包的id',
+	uid int not null comment '领取者id',
+	score int not null comment '抢到的积分值',
+	type tinyint not null comment '领取类型 0-抢红包 1-红包回退',
+	create_time datetime COMMENT '创建时间',
+	update_time datetime COMMENT '最后修改时间',
+	STATUS TINYINT COMMENT '状态',
+	del_flag TINYINT COMMENT '删除标识'
+) comment '红包明细表';

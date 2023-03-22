@@ -9,6 +9,7 @@
         <result property="sessionKey" column="session_key" jdbcType="VARCHAR"/>
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
         <result property="header" column="header" jdbcType="VARCHAR"/>
+        <result property="score" column="score" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="status" column="STATUS" jdbcType="INTEGER"/>
@@ -17,21 +18,21 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag)
+        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag, score)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag}, #{entity.score})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag)
+        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag, score)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag}, #{entity.score})
         </foreach>
         on duplicate key update
-         openid = values(openid) , unionid = values(unionid) , session_key = values(session_key) , nickname = values(nickname) , header = values(header) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag)     </insert>
+         openid = values(openid) , unionid = values(unionid) , session_key = values(session_key) , nickname = values(nickname) , header = values(header) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag) , score = values(score)     </insert>
 
 </mapper>
 

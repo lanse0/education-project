@@ -35,6 +35,7 @@
         <module>data-user</module>
         <module>data-notify</module>
         <module>data-course</module>
+        <module>data-redenvlopes</module>
     </modules>
 
 

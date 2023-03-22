@@ -179,6 +179,11 @@
                 <artifactId>data-course</artifactId>
                 <version>${qf.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.qf</groupId>
+                <artifactId>data-redenvlopes</artifactId>
+                <version>${qf.version}</version>
+            </dependency>
 
 
             <dependency>

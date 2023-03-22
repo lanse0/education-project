@@ -16,6 +16,7 @@
 <!--        <module>business-course</module>-->
         <module>business-user</module>
         <module>business-course</module>
+        <module>business-redenvlopes</module>
     </modules>
 
     <dependencies>

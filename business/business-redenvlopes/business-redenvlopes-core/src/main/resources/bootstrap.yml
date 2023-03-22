@@ -1,0 +1,12 @@
+server:
+  port: 8300
+spring:
+  #微服务的名称
+  application:
+    name: red-server
+  cloud:
+    nacos:
+      #注册中心 & 配置中心的统一地址
+      server-addr: @nacos-server@
+  profiles:
+    active: @runtime-profile@

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.business.user.core.dao.WxScoreDetailsDao">
+
+    <resultMap type="com.qf.data.user.entity.WxScoreDetails" id="WxScoreDetailsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="sourceScore" column="source_score" jdbcType="INTEGER"/>
+        <result property="actionScore" column="action_score" jdbcType="INTEGER"/>
+        <result property="target" column="target" jdbcType="INTEGER"/>
+        <result property="busid" column="busid" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.wx_score_details(uid, source_score, action_score, target, busid, create_time, update_time, STATUS, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.uid}, #{entity.sourceScore}, #{entity.actionScore}, #{entity.target}, #{entity.busid}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into educationdb.wx_score_details(uid, source_score, action_score, target, busid, create_time, update_time, STATUS, del_flag)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.uid}, #{entity.sourceScore}, #{entity.actionScore}, #{entity.target}, #{entity.busid}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+        </foreach>
+        on duplicate key update
+         uid = values(uid) , source_score = values(source_score) , action_score = values(action_score) , target = values(target) , busid = values(busid) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag)     </insert>
+
+</mapper>
+
