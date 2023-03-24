@@ -30,15 +30,25 @@ public class GlobalExceptionHandler {
         return R.createFail(e.getCode(), e.getMsg());
     }
 
+    /**
+     * 拦截参数校验的异常
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(BindException.class)
     public R bindExceptionHandler(BindException e) {
         BindingResult result = e.getBindingResult();
         List<ObjectError> errors = result.getAllErrors();
-        List<String> errorInfo = new ArrayList<>();
-        for (ObjectError error : errors) {
-            errorInfo.add(error.getDefaultMessage());
-        }
-        return R.createFail(RCodes.DATA_CHECKED_ERROR, errorInfo);
+
+//        List<String> errorInfo = new ArrayList<>();
+//        for (ObjectError error : errors) {
+//            errorInfo.add(error.getDefaultMessage());
+//        }
+//        return R.createFail(RCodes.DATA_CHECKED_ERROR, errorInfo);
+
+        //2023-3-24 修改 直接返回参数校验的第一个异常信息
+        return R.createFail(401, errors.get(0).getDefaultMessage());
     }
 
 
