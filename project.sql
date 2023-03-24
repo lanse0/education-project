@@ -113,6 +113,7 @@ create table wx_user(
 
 -- 给微信用户表添加一个字段 积分
 alter table wx_user add column score int not null default 0 comment '用户积分';
+
 -- 积分流水表
 create table wx_score_details(
 	id int primary key auto_increment comment '主键',
@@ -154,3 +155,19 @@ create table red_envelopes_details(
 	STATUS TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '红包明细表';
+
+
+-- 回滚日志表
+-- 注意此处0.7.0+ 增加字段 context
+CREATE TABLE `undo_log` (
+	`id` BIGINT ( 20 ) NOT NULL auto_increment,
+	`branch_id` BIGINT ( 20 ) NOT NULL,
+	`xid` VARCHAR ( 100 ) NOT NULL,
+	`context` VARCHAR ( 128 ) NOT NULL,
+	`rollback_info` LONGBLOB NOT NULL,
+	`log_status` INT ( 11 ) NOT NULL,
+	`log_created` datetime NOT NULL,
+	`log_modified` datetime NOT NULL,
+	PRIMARY KEY ( `id` ),
+UNIQUE KEY `ux_undo_log` ( `xid`, `branch_id` )
+) ENGINE = INNODB auto_increment = 1 DEFAULT charset = utf8;

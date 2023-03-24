@@ -5,6 +5,7 @@ import com.qf.business.user.core.dao.WxScoreDetailsDao;
 import com.qf.data.user.entity.WxScoreDetails;
 import com.qf.business.user.core.service.WxScoreDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 积分流水表(WxScoreDetails)表服务实现类
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @since 2023-03-21 23:40:28
  */
 @Service("wxScoreDetailsService")
+@Transactional
 public class WxScoreDetailsServiceImpl extends ServiceImpl<WxScoreDetailsDao, WxScoreDetails> implements WxScoreDetailsService {
 
 }

@@ -11,4 +11,10 @@
 
     <artifactId>business-redenvlopes-core</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qf</groupId>
+            <artifactId>business-user-feign</artifactId>
+        </dependency>
+    </dependencies>
 </project>

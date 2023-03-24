@@ -11,10 +11,12 @@ import com.qf.commons.web.aspect.annotation.GetUser;
 import com.qf.commons.web.utils.UserUtils;
 import com.qf.data.user.entity.WxUser;
 import com.qf.business.user.core.service.WxUserService;
+import com.qf.data.user.vo.input.WxScoreUpdateInput;
 import com.qf.data.user.vo.input.WxUserInput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -81,6 +83,18 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserDao, WxUser> implements
         WxUser wxUser = QfBeanUtils.copyBean(wxUserInput, WxUser.class);
         wxUser.setId(user.getId());
         return this.updateById(wxUser);
+    }
+
+    /**
+     * 修改用户积分 增加/扣减
+     *
+     * @param wxScoreUpdateInput
+     * @return
+     */
+    @Override
+    @Transactional
+    public int updateWxScore(WxScoreUpdateInput wxScoreUpdateInput) {
+        return getBaseMapper().updateWxScore(wxScoreUpdateInput);
     }
 }
 

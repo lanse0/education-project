@@ -18,21 +18,42 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag, score)
+        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time,
+        STATUS, del_flag, score)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag}, #{entity.score})
+            (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header},
+            #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag}, #{entity.score})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time, STATUS, del_flag, score)
+        insert into educationdb.wx_user(openid, unionid, session_key, nickname, header, create_time, update_time,
+        STATUS, del_flag, score)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag}, #{entity.score})
+            (#{entity.openid}, #{entity.unionid}, #{entity.sessionKey}, #{entity.nickname}, #{entity.header},
+            #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag}, #{entity.score})
         </foreach>
         on duplicate key update
-         openid = values(openid) , unionid = values(unionid) , session_key = values(session_key) , nickname = values(nickname) , header = values(header) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag) , score = values(score)     </insert>
+        openid = values(openid) , unionid = values(unionid) , session_key = values(session_key) , nickname =
+        values(nickname) , header = values(header) , create_time = values(create_time) , update_time =
+        values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag) , score = values(score)
+    </insert>
+    <!--修改用户积分 乐观锁的方式 并不是真正加锁 扣积分操作时 判断当前积分是否大于需要扣的积分-->
+    <update id="updateWxScore">
+        update wx_user set
+        <if test="type == 0">
+            score = score - #{score}
+        </if>
+        <if test="type == 1">
+            score = score + #{score}
+        </if>
+        where id = #{uid}
+        <if test="type == 0">
+            and score >= #{score}
+        </if>
+    </update>
 
 </mapper>
 
