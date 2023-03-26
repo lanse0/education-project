@@ -1,18 +1,23 @@
 package com.qf.business.redenvlopes.core.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.data.redenvlopes.dto.RedEnvelopesDto;
+import com.data.redenvlopes.entity.RedEnvelopesDetails;
 import com.data.redenvlopes.vo.input.RedEnvlopesInput;
 import com.qf.business.redenvlopes.core.dao.RedEnvelopesDao;
 import com.data.redenvlopes.entity.RedEnvelopes;
+import com.qf.business.redenvlopes.core.service.RedEnvelopesDetailsService;
 import com.qf.business.redenvlopes.core.service.RedEnvelopesService;
 import com.qf.business.user.feign.WxUserFeign;
 import com.qf.commons.core.exception.ServiceException;
 import com.qf.commons.core.utils.QfBeanUtils;
+import com.qf.commons.redis.annotation.KLock;
 import com.qf.commons.web.aspect.annotation.GetUser;
 import com.qf.commons.web.utils.UserUtils;
 import com.qf.data.user.entity.WxScoreDetails;
 import com.qf.data.user.vo.input.WxScoreUpdateInput;
 import io.seata.spring.annotation.GlobalTransactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +30,13 @@ import java.util.Date;
  * @since 2023-03-21 23:45:36
  */
 @Service("redEnvelopesService")
+@Slf4j
 public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnvelopes> implements RedEnvelopesService {
 
     @Autowired
     private WxUserFeign wxUserFeign;
+    @Autowired
+    private RedEnvelopesDetailsService redEnvelopesDetailsService;
 
     /**
      * 发红包
@@ -75,11 +83,76 @@ public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnv
      * 抢红包
      *
      * @param redId
-     * @return
+     * @return 正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
      */
     @Override
+    @GetUser
+    @KLock("'red-lock' + #redId") //加分布式锁 拿到了红包还没走完抢红包流程时 阻止其他线程进行抢红包操作
+    @GlobalTransactional
     public int robRed(Integer redId) {
-        return 0;
+        //获取当前抢红包的用户id
+        Integer uid = UserUtils.getUser().getId();
+        //根据红包id 查询红包信息
+        //从这里就需要开始上锁 避免其他线程对红包进行了操作，抢到积分 导致这里的实体类与数据库数据不一致
+        RedEnvelopesDto redEnvelopesDto = this.queryRedById(redId);
+        log.debug("[rob red] 抢红包 - {}", redEnvelopesDto);
+
+        //判断红包状态
+        if (redEnvelopesDto.getStatus() == 1){
+            //红包已抢完
+            return -1;
+        }else if(redEnvelopesDto.getStatus() == 2){
+            //红包已过期
+            return -2;
+        }
+        //红包状态正常 判断用户是否已经抢过该红包 查询红包明细表 该用户的记录数
+        Long count = redEnvelopesDetailsService.query().eq("redid", redId).eq("uid", uid).count();
+        if (count > 0){
+            //当前红包用户已经抢过
+            return -3;
+        }
+
+        //抢到的积分
+        Integer robScore = 0;
+
+        //红包状态正常 且用户可以抢该红包
+        //判断剩余积分 剩余可抢人数
+        if (redEnvelopesDto.getType() == 0){
+            //固定红包
+            robScore = redEnvelopesDto.getHasScore()/redEnvelopesDto.getHasCount();
+        }else {
+            //随机红包
+            if (redEnvelopesDto.getHasCount() == 1){
+                //只剩余一个红包
+                robScore = redEnvelopesDto.getHasScore();
+            }else {
+                //红包随机算法 二倍均值法  1 ~ 积分 / 剩余人数 * 2
+                //积分：1000 剩余人数：10  ->  红包范围：1~1000/10*2 = 1~200
+                //积分：900 剩余人数：9    ->  红包范围：1~900/9*2 = 1~200
+                robScore = (int)(Math.random()*(redEnvelopesDto.getHasScore()/redEnvelopesDto.getHasCount()*2-1))+1;
+            }
+        }
+        //抢红包完成 红包明细表、积分流水表写入、修改用户积分
+        RedEnvelopesDetails redEnvelopesDetails = new RedEnvelopesDetails()
+                .setUid(uid)
+                .setRedid(redId)
+                .setType(0) //0抢红包
+                .setScore(robScore);
+        redEnvelopesDetailsService.save(redEnvelopesDetails);
+        //修改用户积分
+        wxUserFeign.updateWxScore(new WxScoreUpdateInput()
+                .setScore(robScore)
+                .setUid(uid)
+                .setType(1));//1增加积分
+        //积分流水表
+        wxUserFeign.createScoreDetails(new WxScoreDetails()
+                .setUid(uid)
+                .setBusid(redId)
+                .setSourceScore(0)
+                .setActionScore(robScore)
+                .setTarget(1));//1表示抢红包
+
+        return robScore;
     }
 
     /**
@@ -91,6 +164,17 @@ public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnv
     @Override
     public int redBack(Integer redId) {
         return 0;
+    }
+
+    /**
+     * 根据红包id  查询出包含剩余积分数和红包数量的dto类
+     *
+     * @param redid 红包id
+     * @return 红包dto类 提供给抢红包业务使用，包含剩余积分和剩余红包数属性
+     */
+    @Override
+    public RedEnvelopesDto queryRedById(Integer redid) {
+        return getBaseMapper().queryRedById(redid);
     }
 }
 

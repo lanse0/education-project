@@ -29,4 +29,16 @@ public class RedEnvlopesController {
         int redId = redEnvelopesService.sendRed(redEnvlopesInput);
         return R.create(redId);
     }
+
+    /**
+     * 抢红包的请求
+     * @param redid
+     * @return 正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
+     */
+    @RequestMapping("/rob")
+    public R rob(Integer redid){
+        //返回值：正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
+        int result = redEnvelopesService.robRed(redid);
+        return R.create(result);
+    }
 }

@@ -18,21 +18,36 @@
 
     <!-- 批量插入 -->
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.red_envelopes(uid, scount, number, type, info, timeout, create_time, update_time, STATUS, del_flag)
+        insert into educationdb.red_envelopes(uid, scount, number, type, info, timeout, create_time, update_time,
+        STATUS, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.uid}, #{entity.scount}, #{entity.number}, #{entity.type}, #{entity.info}, #{entity.timeout}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.uid}, #{entity.scount}, #{entity.number}, #{entity.type}, #{entity.info}, #{entity.timeout},
+            #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
     </insert>
     <!-- 批量插入或按主键更新 -->
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into educationdb.red_envelopes(uid, scount, number, type, info, timeout, create_time, update_time, STATUS, del_flag)
+        insert into educationdb.red_envelopes(uid, scount, number, type, info, timeout, create_time, update_time,
+        STATUS, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.uid}, #{entity.scount}, #{entity.number}, #{entity.type}, #{entity.info}, #{entity.timeout}, #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
+            (#{entity.uid}, #{entity.scount}, #{entity.number}, #{entity.type}, #{entity.info}, #{entity.timeout},
+            #{entity.createTime}, #{entity.updateTime}, #{entity.status}, #{entity.delFlag})
         </foreach>
         on duplicate key update
-         uid = values(uid) , scount = values(scount) , number = values(number) , type = values(type) , info = values(info) , timeout = values(timeout) , create_time = values(create_time) , update_time = values(update_time) , STATUS = values(STATUS) , del_flag = values(del_flag)     </insert>
+        uid = values(uid) , scount = values(scount) , number = values(number) , type = values(type) , info =
+        values(info) , timeout = values(timeout) , create_time = values(create_time) , update_time = values(update_time)
+        , STATUS = values(STATUS) , del_flag = values(del_flag)
+    </insert>
+
+    <select id="queryRedById" resultType="com.data.redenvlopes.dto.RedEnvelopesDto">
+        select
+            r.*,(r.scount - IFNULL(SUM(rd.score),0)) as hasScore,(r.number - count(rd.id)) as hasCount
+        from
+            red_envelopes r left join red_envelopes_details rd on r.id =  rd.redid
+        where r.id = #{redid}
+    </select>
 
 </mapper>
 
