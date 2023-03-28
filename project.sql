@@ -22,7 +22,7 @@ CREATE TABLE course_type (
 	tag VARCHAR ( 100 ) COMMENT '分类标签 存储上面级分类的id 如：00010002',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态',
+	status TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) COMMENT '课程分类表';
 -- 课程分类和规格关联表
@@ -31,7 +31,7 @@ create table course_type_guige(
 	gid int comment '分类规格ID',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态',
+	status TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识',
 	primary key(tid,gid)
 ) comment '课程分类和规格关联表';
@@ -42,7 +42,7 @@ CREATE TABLE course_guige (
 	info VARCHAR ( 50 ) COMMENT '规格备注',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态',
+	status TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) COMMENT '课程分类的规格表';
 -- 具体规格可选项表
@@ -52,7 +52,7 @@ CREATE TABLE course_guige_val (
 	val VARCHAR ( 50 ) NOT NULL COMMENT '规格值',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态',
+	status TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) COMMENT '具体规格可选项表';
 
@@ -69,7 +69,7 @@ create table course_info(
 	end_time datetime comment '课程结束时间',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态 0-待审核 1-审核通过 2-审核驳回',
+	status TINYINT COMMENT '状态 0-待审核 1-审核通过 2-审核驳回',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '课程信息表';
 -- 课程详细计划表(课程小节)
@@ -82,7 +82,7 @@ create table course_desc_info(
 	type tinyint not null comment '章节类型 0-收费 1-免费试听',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态 0-待审核 1-审核通过 2-审核驳回',
+	status TINYINT COMMENT '状态 0-待审核 1-审核通过 2-审核驳回',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '课程详细计划表(小节)';
 -- 课程信息规格关联信息
@@ -92,7 +92,7 @@ create table course_info_guige(
 	cgvid int not null comment '规格具体的值的id',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态 0-待审核 1-审核通过 2-审核驳回',
+	status TINYINT COMMENT '状态 0-待审核 1-审核通过 2-审核驳回',
 	del_flag TINYINT COMMENT '删除标识',
 	PRIMARY key (cid,cgid,cgvid)
 ) comment '课程信息和规格关联表';
@@ -107,7 +107,7 @@ create table wx_user(
 	header text comment '小程序端的头像',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态',
+	status TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '小程序端的用户表';
 
@@ -124,7 +124,7 @@ create table wx_score_details(
 	busid int comment '业务id',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态',
+	status TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '积分流水表';
 
@@ -139,7 +139,7 @@ create table red_envelopes(
 	timeout datetime comment '红包过期时间',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态 0-待领取 1-领取完 2-红包过期',
+	status TINYINT COMMENT '状态 0-待领取 1-领取完 2-红包过期',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '红包表';
 
@@ -152,7 +152,7 @@ create table red_envelopes_details(
 	type tinyint not null comment '领取类型 0-抢红包 1-红包回退',
 	create_time datetime COMMENT '创建时间',
 	update_time datetime COMMENT '最后修改时间',
-	STATUS TINYINT COMMENT '状态',
+	status TINYINT COMMENT '状态',
 	del_flag TINYINT COMMENT '删除标识'
 ) comment '红包明细表';
 
