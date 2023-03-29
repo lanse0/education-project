@@ -31,13 +31,12 @@ public class RedEnvlopesController {
     }
 
     /**
-     * 抢红包的请求
+     * 抢红包的请求 redis版本这个控制器不会执行 被网关层直接拦截 并实现了业务
      * @param redid
-     * @return 正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
+     * @return 正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过 redis版本 -2已抢完 -1红包过期 -3用户已抢过
      */
     @RequestMapping("/rob")
     public R rob(Integer redid){
-        //返回值：正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
         int result = redEnvelopesService.robRed(redid);
         return R.create(result);
     }

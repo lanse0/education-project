@@ -16,7 +16,11 @@ public enum RCodes {
     DATA_UNIQUE_ERROR(405, "数据已经存在"),
     AUTH_FAIL(406, "必须登录才可以访问该资源"),
     NO_POWER_ERROR(407, "权限不足"),
-    TOKEN_GET_ERROR(408,"服务器繁忙，请稍后重试");
+    TOKEN_GET_ERROR(408,"服务器繁忙，请稍后重试"),
+    RED_TIMEOUT(410,"红包已过期"),
+    RED_OVER(411,"红包已抢完"),
+    RED_EXISTS(412,"红包已抢过");
+
 
     private Integer code;
     private String msg;

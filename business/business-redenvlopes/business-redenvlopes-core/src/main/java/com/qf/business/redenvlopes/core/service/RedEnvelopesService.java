@@ -21,11 +21,20 @@ public interface RedEnvelopesService extends IService<RedEnvelopes> {
     int sendRed(RedEnvlopesInput redEnvlopesInput);
 
     /**
-     * 抢红包
+     * 抢红包 - 分布式锁方案
      * @param redId
      * @return 正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
      */
     int robRed(Integer redId);
+
+    /**
+     * 抢红包 - redis方案
+     * @param redId
+     * @param uid
+     * @param score
+     * @return
+     */
+    int robRed(Integer redId,Integer uid,Integer score);
 
     /**
      * 红包回退

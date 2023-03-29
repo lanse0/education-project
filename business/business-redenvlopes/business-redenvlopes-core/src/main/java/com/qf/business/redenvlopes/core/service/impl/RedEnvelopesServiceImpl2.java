@@ -2,10 +2,10 @@ package com.qf.business.redenvlopes.core.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.data.redenvlopes.dto.RedEnvelopesDto;
+import com.data.redenvlopes.entity.RedEnvelopes;
 import com.data.redenvlopes.entity.RedEnvelopesDetails;
 import com.data.redenvlopes.vo.input.RedEnvlopesInput;
 import com.qf.business.redenvlopes.core.dao.RedEnvelopesDao;
-import com.data.redenvlopes.entity.RedEnvelopes;
 import com.qf.business.redenvlopes.core.service.RedEnvelopesDetailsService;
 import com.qf.business.redenvlopes.core.service.RedEnvelopesService;
 import com.qf.business.user.feign.WxUserFeign;
@@ -19,25 +19,56 @@ import com.qf.data.user.vo.input.WxScoreUpdateInput;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 
 
 /**
- * 红包表(RedEnvelopes)表服务实现类
+ * 红包表(RedEnvelopes)表服务实现类 - redis版本
  *
  * @author makejava
  * @since 2023-03-21 23:45:36
  */
 @Service
 @Slf4j
-public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnvelopes> implements RedEnvelopesService {
+@Primary //自动注入这个类 全局只能有一个
+public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEnvelopes> implements RedEnvelopesService {
 
     @Autowired
     private WxUserFeign wxUserFeign;
     @Autowired
     private RedEnvelopesDetailsService redEnvelopesDetailsService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    //创建红包的lua脚本
+    private String createRedLua = "-- 接受红包相关参数\n" +
+            "local redid = KEYS[1]\n" +
+            "local type = ARGV[1]\n" +
+            "local score = ARGV[2]\n" +
+            "local count = ARGV[3]\n" +
+            "\n" +
+            "-- 生成一个key\n" +
+            "local key = 'red_envlopes_'..redid\n" +
+            "\n" +
+            "-- 判断当前红包是否存在\n" +
+            "local result = redis.call('exists',key)\n" +
+            "if result == 1 then\n" +
+            "-- 红包已存在\n" +
+            "  return -1\n" +
+            "end\n" +
+            "\n" +
+            "-- 创建红包\n" +
+            "redis.call('hset',key,'type',type)\n" +
+            "redis.call('hset',key,'score',score)\n" +
+            "redis.call('hset',key,'count',count)\n" +
+            "\n" +
+            "return 1";
 
     /**
      * 发红包
@@ -77,12 +108,22 @@ public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnv
                 .setSourceScore(0) //原始积分 正常需要先去查询
                 .setActionScore(-redEnvelopes.getScount()));
 
+        //通过lua脚本 写入红包信息到redis
+        Long flag = stringRedisTemplate.execute(new DefaultRedisScript<Long>(createRedLua, Long.class),
+                Collections.singletonList(redId + ""),
+                redEnvelopes.getType() + "",
+                redEnvelopes.getScount() + "",
+                redEnvelopes.getNumber() + "");
+        if (flag != 1) {
+            //红包发送未成功，抛异常 让事务回滚
+            throw new ServiceException(500, "红包发送异常");
+        }
 
         return redId;
     }
 
     /**
-     * 抢红包
+     * 抢红包 redis版本在网关层实现 用拦截器抢
      *
      * @param redId
      * @return 正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
@@ -168,7 +209,7 @@ public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnv
     }
 
     /**
-     * 抢红包 - redis方案
+     * 抢红包 - redis方案 监听mq队列的rob-red事件 表数据插入 红包明细，用户积分流水，用户积分修改
      *
      * @param redId
      * @param uid
@@ -176,8 +217,30 @@ public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnv
      * @return
      */
     @Override
+    @GlobalTransactional
     public int robRed(Integer redId, Integer uid, Integer score) {
-        return 0;
+
+        //抢红包完成 红包明细表、积分流水表写入、修改用户积分
+        RedEnvelopesDetails redEnvelopesDetails = new RedEnvelopesDetails()
+                .setUid(uid)
+                .setRedid(redId)
+                .setType(0) //0抢红包
+                .setScore(score);
+        redEnvelopesDetailsService.save(redEnvelopesDetails);
+        //修改用户积分
+        wxUserFeign.updateWxScore(new WxScoreUpdateInput()
+                .setScore(score)
+                .setUid(uid)
+                .setType(1));//操作类型 1增加积分 0扣减积分
+        //积分流水表
+        wxUserFeign.createScoreDetails(new WxScoreDetails()
+                .setUid(uid)
+                .setBusid(redId)
+                .setSourceScore(0)
+                .setActionScore(score)
+                .setTarget(1));//1表示抢红包
+
+        return 1;
     }
 
     /**

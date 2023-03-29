@@ -5,3 +5,6 @@ spring:
     username: guest
     password: guest
     virtual-host: /
+    listener:
+      simple:
+        concurrency: 10

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
@@ -36,7 +37,7 @@ import java.util.Map;
 @Component
 @Slf4j
 @RefreshScope   //远程配置中心的刷新注解
-public class AuthGlobalFilter implements GlobalFilter {
+public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     /**
      * 注入需要忽略认证的请求的url集合
@@ -213,5 +214,10 @@ public class AuthGlobalFilter implements GlobalFilter {
 
         //把新的请求放行 删除了原来请求里面多余的数据
         return chain.filter(exchange.mutate().request(newRequest).build());
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
     }
 }

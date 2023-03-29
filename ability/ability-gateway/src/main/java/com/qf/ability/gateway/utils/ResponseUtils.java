@@ -25,8 +25,10 @@ public class ResponseUtils {
     public static Mono response(ServerWebExchange exchange, R result) {
         //当前未登录,响应错误信息给客户端
         ServerHttpResponse response = exchange.getResponse();
-        //设置响应码 500
-        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (result.getCode() != 200) {
+            //设置响应码 500
+            response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         //设置响应头 - 告诉客户端，返回的是一个json字符串
         response.getHeaders().add("Content-Type","application/json;charset=utf-8");
         DataBuffer dataBuffer = null;

@@ -16,6 +16,13 @@ spring:
             refresh: true
           - data-id: gateway-ignore-url.yml
             refresh: true
+    gateway:
+      httpclient:
+        pool:
+          #最大连接数
+          max-connections: 1000
+        #超时时间
+        connect-timeout: 10000
   profiles:
     active: @runtime-profile@
 
