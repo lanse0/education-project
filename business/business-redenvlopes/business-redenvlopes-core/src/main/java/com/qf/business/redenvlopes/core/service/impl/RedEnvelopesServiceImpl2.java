@@ -5,6 +5,7 @@ import com.data.redenvlopes.dto.RedEnvelopesDto;
 import com.data.redenvlopes.entity.RedEnvelopes;
 import com.data.redenvlopes.entity.RedEnvelopesDetails;
 import com.data.redenvlopes.vo.input.RedEnvlopesInput;
+import com.ken.event.action.apply.producer.EventTemplate;
 import com.qf.business.redenvlopes.core.dao.RedEnvelopesDao;
 import com.qf.business.redenvlopes.core.service.RedEnvelopesDetailsService;
 import com.qf.business.redenvlopes.core.service.RedEnvelopesService;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -69,6 +71,30 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
             "redis.call('hset',key,'count',count)\n" +
             "\n" +
             "return 1";
+
+    /**
+     * 红包回退的lua脚本
+     */
+    private String redBackLua = "-- 获取红包id\n" +
+            "local redid = KEYS[1]\n" +
+            "-- 获取红包key\n" +
+            "local key = 'red_envlopes_' .. redid\n" +
+            "-- 判断红包是否存在\n" +
+            "local flag = redis.call('exists',key)\n" +
+            "if flag == 0 then\n" +
+            "    --红包不存在\n" +
+            "    return -1\n" +
+            "end\n" +
+            "-- 获取红包剩余积分\n" +
+            "local score = tonumber(redis.call('hget',key,'score'))\n" +
+            "--删除当前红包key\n" +
+            "redis.call('del',key)\n" +
+            "if score == 0 then\n" +
+            "    -- 红包已被抢完\n" +
+            "    return -2\n" +
+            "end\n" +
+            "--红包未抢完 返回剩余积分\n" +
+            "return score";
 
     /**
      * 发红包
@@ -119,11 +145,14 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
             throw new ServiceException(500, "红包发送异常");
         }
 
+        //将红包的消息发送到时间总线 通过延时队列 来回收红包  5s过期时间  red-send 需要抽离出来 用常量
+        EventTemplate.sendDelay("red-send", redId, 1, TimeUnit.DAYS);
+
         return redId;
     }
 
     /**
-     * 抢红包 redis版本在网关层实现 用拦截器抢
+     * 抢红包 数据库版本
      *
      * @param redId
      * @return 正数-抢到的积分 -1已抢完 -2红包过期 -3用户已抢过
@@ -134,8 +163,8 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
     @GlobalTransactional
     public int robRed(Integer redId) {
         //获取当前抢红包的用户id
-//        Integer uid = UserUtils.getUser().getId();
-        Integer uid = (int) (Math.random() * 10000);//并发测试，抢红包性能
+        Integer uid = UserUtils.getUser().getId();
+//        Integer uid = (int) (Math.random() * 10000);//并发测试，抢红包性能
         //根据红包id 查询红包信息
         //从这里就需要开始上锁 避免其他线程对红包进行了操作，抢到积分 导致这里的实体类与数据库数据不一致
         RedEnvelopesDto redEnvelopesDto = this.queryRedById(redId);
@@ -193,10 +222,10 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
                 .setScore(robScore);
         redEnvelopesDetailsService.save(redEnvelopesDetails);
         //修改用户积分
-//        wxUserFeign.updateWxScore(new WxScoreUpdateInput()
-//                .setScore(robScore)
-//                .setUid(uid)
-//                .setType(1));//1增加积分
+        wxUserFeign.updateWxScore(new WxScoreUpdateInput()
+                .setScore(robScore)
+                .setUid(uid)
+                .setType(1));//1增加积分
         //积分流水表
         wxUserFeign.createScoreDetails(new WxScoreDetails()
                 .setUid(uid)
@@ -250,8 +279,54 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
      * @return
      */
     @Override
+    @GlobalTransactional
     public int redBack(Integer redId) {
-        return 0;
+
+        //数据库方式红包回退
+        //获取红包dto对象 判断红包状态 是否抢完 抢完无需操作
+        //查询剩余积分 将积分返回给用户 通知用户
+        //若发红包使用了 redis 上述方法不可用 数据库写入和redis抢红包是异步的
+        //可能抢红包的事件还未被红包服务消费写入数据库 红包就已经到期 导致积分即被抢又被回退
+
+        //redis版本的回退红包方法
+        //1、通过lua脚本从redis中获取红包的剩余积分
+        //  返回-1红包不存在
+        //  返回-2红包已抢完
+        //  返回其他 剩余的积分
+        Long score = stringRedisTemplate.execute(new DefaultRedisScript<Long>(redBackLua, Long.class),
+                Collections.singletonList(redId + ""));
+        if (score == -1) {
+            log.debug("[red miss] 红包回退，未找到红包 - {}", redId);
+            return -1;
+        }
+        //红包未抢完
+        if (score > 0) {
+            RedEnvelopes redEnvelopes = this.getById(redId);
+            //修改红包状态
+            redEnvelopes.setStatus(2);//红包过期
+            this.updateById(redEnvelopes);
+            //生成红包明细记录
+            RedEnvelopesDetails redEnvelopesDetails = new RedEnvelopesDetails()
+                    .setUid(redEnvelopes.getUid())
+                    .setRedid(redId)
+                    .setType(1)//1-红包回退
+                    .setScore(score.intValue());
+            redEnvelopesDetailsService.save(redEnvelopesDetails);
+            //修改发送者的积分
+            wxUserFeign.updateWxScore(new WxScoreUpdateInput()
+                    .setUid(redEnvelopes.getUid())
+                    .setType(1)//1 增加积分
+                    .setScore(score.intValue()));
+            //用户积分流水表生成
+            wxUserFeign.createScoreDetails(new WxScoreDetails()
+                    .setUid(redEnvelopes.getUid())
+                    .setBusid(redId)
+                    .setSourceScore(0)
+                    .setActionScore(score.intValue())
+                    .setTarget(4));//4 红包回退
+        }
+
+        return 1;
     }
 
     /**

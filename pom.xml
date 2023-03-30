@@ -36,7 +36,7 @@
         <apm-toolkit-log4j-2.x.version>8.9.0</apm-toolkit-log4j-2.x.version>
         <redisson.version>3.13.6</redisson.version>
         <xxl-job.version>2.3.0</xxl-job.version>
-        <ken-event.version>1.0</ken-event.version>
+        <ken-event.version>1.1</ken-event.version>
     </properties>
 
     <dependencyManagement>

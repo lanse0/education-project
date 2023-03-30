@@ -28,7 +28,7 @@ public class WxScoreDetails extends BaseEntity {
     private Integer sourceScore;
     //操作积分
     private Integer actionScore;
-    //积分来源 0-发红包 1-抢红包 2-充值 3-活动 ... 
+    //积分来源 0-发红包 1-抢红包 2-充值 3-活动 4-红包回退 ... 这个东西应该写一个枚举
     private Integer target;
     //业务id
     private Integer busid;

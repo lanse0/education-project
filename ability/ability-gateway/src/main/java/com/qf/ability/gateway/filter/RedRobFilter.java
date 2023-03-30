@@ -4,35 +4,21 @@ import com.ken.event.action.apply.producer.EventTemplate;
 import com.qf.ability.gateway.utils.ResponseUtils;
 import com.qf.commons.data.result.R;
 import com.qf.commons.data.result.RCodes;
-import io.netty.buffer.ByteBufAllocator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.nio.CharBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * redis抢红包的拦截器
@@ -200,7 +186,7 @@ public class RedRobFilter extends AbstractGatewayFilterFactory implements Gatewa
         map.put("redid", Integer.parseInt(redid));
         map.put("uid", Integer.parseInt(uid));
         map.put("robScore", result.intValue()); //long转integer
-        //事件总线 发布抢红包事件 让红包服务监听 进行数据库写入
+        //事件总线 发布抢红包事件 让红包服务监听 进行数据库写入  rob-red 需要抽离出来 用常量
         EventTemplate.sendReliable("rob-red", map);
         //抢红包业务已经执行完 返回结果
         return ResponseUtils.response(exchange, R.create(result));
