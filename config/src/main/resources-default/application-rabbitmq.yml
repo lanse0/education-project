@@ -8,3 +8,5 @@ spring:
     listener:
       simple:
         concurrency: 10
+        #消息自动确认
+        acknowledge-mode: auto

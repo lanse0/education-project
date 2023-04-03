@@ -21,7 +21,11 @@ public class RedSendDelayEventHandler implements IKenEventHandler<Integer> {
 
     @Override
     public void eventHandler(Integer redId, KenMessage kenMessage) {
-        log.debug("[red timeout] 红包到期的消息 - {}", redId);
-        redEnvelopesService.redBack(redId);
+        try {
+            log.debug("[red timeout] 红包到期的消息 - {}", redId);
+            redEnvelopesService.redBack(redId);
+        } catch (Throwable t) {
+            throw new RuntimeException("随便抛出的异常!!!");
+        }
     }
 }

@@ -42,7 +42,6 @@
         <dependency>
             <groupId>io.github.verygoodwlk</groupId>
             <artifactId>ken-event-boot-starter</artifactId>
-            <version>1.0</version>
         </dependency>
 
         <dependency>
