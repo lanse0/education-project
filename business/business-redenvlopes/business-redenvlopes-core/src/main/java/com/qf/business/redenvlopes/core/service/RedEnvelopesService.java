@@ -5,6 +5,8 @@ import com.data.redenvlopes.dto.RedEnvelopesDto;
 import com.data.redenvlopes.entity.RedEnvelopes;
 import com.data.redenvlopes.vo.input.RedEnvlopesInput;
 
+import java.util.List;
+
 /**
  * 红包表(RedEnvelopes)表服务接口
  *
@@ -49,5 +51,11 @@ public interface RedEnvelopesService extends IService<RedEnvelopes> {
      * @return 红包dto类 提供给抢红包业务使用，包含剩余积分和剩余红包数属性
      */
     RedEnvelopesDto queryRedById(Integer redid);
+
+    /**
+     * 查询所有过期红包
+     * @return
+     */
+    List<RedEnvelopes> queryTimeoutRed();
 }
 

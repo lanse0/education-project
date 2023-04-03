@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -200,6 +201,16 @@ public class RedEnvelopesServiceImpl extends ServiceImpl<RedEnvelopesDao, RedEnv
     @Override
     public RedEnvelopesDto queryRedById(Integer redid) {
         return getBaseMapper().queryRedById(redid);
+    }
+
+    /**
+     * 查询所有过期红包
+     *
+     * @return
+     */
+    @Override
+    public List<RedEnvelopes> queryTimeoutRed() {
+        return null;
     }
 }
 

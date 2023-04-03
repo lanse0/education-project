@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.data.redenvlopes.dto.RedEnvelopesDto;
 import org.apache.ibatis.annotations.Param;
 import com.data.redenvlopes.entity.RedEnvelopes;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.test.context.jdbc.Sql;
 
 /**
  * 红包表(RedEnvelopes)表数据库访问层
@@ -38,5 +40,8 @@ public interface RedEnvelopesDao extends BaseMapper<RedEnvelopes> {
      * @return 然会红包dto类 提供给抢红包业务使用，包含剩余积分和剩余红包数属性
      */
     RedEnvelopesDto queryRedById(Integer redid);
+
+    @Select("select * from red_envelopes where timeout <= NOW() and `status` = 0")
+    List<RedEnvelopes> queryTimeoutRed();
 }
 

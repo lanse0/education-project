@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -146,7 +147,7 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
         }
 
         //将红包的消息发送到时间总线 通过延时队列 来回收红包  5s过期时间  red-send 需要抽离出来 用常量
-        EventTemplate.sendDelay("red-send", redId, 1, TimeUnit.DAYS);
+        EventTemplate.sendDelay("red-send", redId, 300, TimeUnit.SECONDS);
 
         return redId;
     }
@@ -299,9 +300,18 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
             log.debug("[red miss] 红包回退，未找到红包 - {}", redId);
             return -1;
         }
+
+        RedEnvelopes redEnvelopes = this.getById(redId);
+
+        if (score == -2){
+            //红包已经抢完
+            redEnvelopes.setStatus(1);
+            this.updateById(redEnvelopes);
+            return 1;
+        }
+
         //红包未抢完
         if (score > 0) {
-            RedEnvelopes redEnvelopes = this.getById(redId);
             //修改红包状态
             redEnvelopes.setStatus(2);//红包过期
             this.updateById(redEnvelopes);
@@ -338,6 +348,16 @@ public class RedEnvelopesServiceImpl2 extends ServiceImpl<RedEnvelopesDao, RedEn
     @Override
     public RedEnvelopesDto queryRedById(Integer redid) {
         return getBaseMapper().queryRedById(redid);
+    }
+
+    /**
+     * 查询所有过期红包
+     *
+     * @return
+     */
+    @Override
+    public List<RedEnvelopes> queryTimeoutRed() {
+        return this.getBaseMapper().queryTimeoutRed();
     }
 }
 
